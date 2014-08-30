@@ -29,11 +29,32 @@ abstract class Module
     protected $description = 'No description present.';
 
     /**
+     * Icon for side menu.
+     *
+     * @var string
+     */
+    protected $icon = 'cubes';
+
+    /**
      * Get the template view for this module.
      *
      * @var string
      */
     protected $template = 'default';
+
+    /**
+     * Count to show on menu.
+     *
+     * @var integer
+     */
+    protected $badge = 0;
+
+    /**
+     * Show this module in the side menu.
+     *
+     * @var boolean
+     */
+    protected $inMenu = true;
 
     /**
      * An array of accessible assets.
@@ -48,6 +69,13 @@ abstract class Module
      * @var array
      */
     protected $data = [];
+
+    /**
+     * Global values for the profiler.
+     *
+     * @var array
+     */
+    protected $global = [];
 
     /**
      * Laravel application instance for the current request.
@@ -107,6 +135,16 @@ abstract class Module
     }
 
     /**
+     * Get the icon for this module.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
      * Get the template view for this module.
      *
      * @return string
@@ -117,13 +155,23 @@ abstract class Module
     }
 
     /**
+     * Get the badge count for this module.
+     *
+     * @return integer
+     */
+    public function getBadge()
+    {
+        return $this->badge;
+    }
+
+    /**
      * Get an array of accessible assets for this module.
      *
      * @return array
      */
     public function getAssets()
     {
-        return $this->styles;
+        return $this->assets;
     }
 
     /**
@@ -133,7 +181,17 @@ abstract class Module
      */
     public function getData()
     {
-        return $this->data();
+        return $this->data;
+    }
+
+    /**
+     * Access the modules template global data array.
+     *
+     * @return array
+     */
+    public function getGlobal()
+    {
+        return $this->global;
     }
 
     /**
@@ -170,8 +228,11 @@ abstract class Module
         return [
             'name'          => $this->name,
             'slug'          => $this->slug,
+            'icon'          => $this->getIcon(),
             'path'          => $this->getPath(),
             'template'      => $this->template,
+            'badge'         => $this->badge,
+            'inMenu'        => $this->inMenu,
             'data'          => $this->data
         ];
     }

@@ -28,6 +28,13 @@ class Logger extends Module
     protected $description = 'Logged messages for this request.';
 
     /**
+     * Icon for side menu.
+     *
+     * @var string
+     */
+    protected $icon = 'align-left';
+
+    /**
      * Executed during service provider loading.
      *
      * @return void
@@ -53,5 +60,15 @@ class Logger extends Module
     {
         // Add log to buffer.
         $this->data['logs'][] = func_get_args();
+    }
+
+    /**
+     * Execute after framework request cycle.
+     *
+     * @return void
+     */
+    public function after()
+    {
+        $this->badge = count($this->data['logs']);
     }
 }

@@ -28,6 +28,13 @@ class QueryLogger extends Module
     protected $description = 'Log of executed SQL queries for the current request.';
 
     /**
+     * Icon for side menu.
+     *
+     * @var string
+     */
+    protected $icon = 'database';
+
+    /**
      * Executed during service provider loading.
      *
      * @return void
@@ -53,5 +60,15 @@ class QueryLogger extends Module
     {
         // Add the query to the buffer.
         $this->data['queries'][] = func_get_args();
+    }
+
+    /**
+     * Execute after framework request cycle.
+     *
+     * @return void
+     */
+    public function after()
+    {
+        $this->badge = count($this->data['queries']);
     }
 }

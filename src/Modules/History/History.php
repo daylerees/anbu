@@ -27,4 +27,11 @@ class History extends Module
      * @var string
      */
     protected $description = 'Browse previous requests to the application.';
+
+    /**
+     * Icon for side menu.
+     *
+     * @var string
+     */
+    protected $icon = 'history';
 }

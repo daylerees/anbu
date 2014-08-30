@@ -55,6 +55,7 @@ class InstallCommand extends Command
             // Create anbu table schema.
             Schema::create('anbu', function ($table) {
                 $table->increments('id');
+                $table->string('uri')->nullable();
                 $table->longText('storage');
                 $table->timestamps();
             });

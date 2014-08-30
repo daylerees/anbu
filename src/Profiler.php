@@ -31,6 +31,21 @@ class Profiler
     protected $enabled = true;
 
     /**
+     * Default modules to load.
+     *
+     * @var array
+     */
+    protected $defaultModules = [
+        'Anbu\Modules\Dashboard\Dashboard',
+        'Anbu\Modules\RoutesBrowser\RoutesBrowser',
+        'Anbu\Modules\Request\Request',
+        'Anbu\Modules\QueryLogger\QueryLogger',
+        'Anbu\Modules\Logger\Logger',
+        'Anbu\Modules\Timers\Timers',
+        'Anbu\Modules\History\History'
+    ];
+
+    /**
      * Register Anbu profiler modules.
      *
      * @param  Application $app
@@ -76,13 +91,17 @@ class Profiler
      */
     protected function getDefaultModules()
     {
-        return [
-            'Anbu\Modules\Dashboard\Dashboard',
-            'Anbu\Modules\RoutesBrowser\RoutesBrowser',
-            'Anbu\Modules\QueryLogger\QueryLogger',
-            'Anbu\Modules\Logger\Logger',
-            'Anbu\Modules\History\History',
-        ];
+        return $this->defaultModules;
+    }
+
+    /**
+     * Set the default modules to load.
+     *
+     * @param array $defaultModules
+     */
+    public function setDefaultModules($defaultModules)
+    {
+        $this->defaultModules = $defaultModules;
     }
 
     /**
@@ -110,10 +129,10 @@ class Profiler
         $module->register();
 
         // Add to module collection.
-        $this->modules[] = $module;
+        $this->modules[$module->getSlug()] = $module;
     }
 
-    /**
+    /*
      * Register event listeners for the profiler.
      *
      * @return void
@@ -143,11 +162,22 @@ class Profiler
         // Create new storage record.
         $storage = new Storage;
 
+        // Get the routing component.
+        $current = $this->app->make('router')->current();
+
+        // Get the current request.
+        $request = $this->app->make('request');
+
+        // Save the current request.
+        $storage->uri = "{$request->method()} {$current->getPath()}";
+
         // Fetch module storage array and set on record.
         $storage->storage = serialize($this->fetchStorage());
 
         // Save record.
         $storage->save();
+
+        echo $this->app->make('view')->make('anbu::button', compact('storage'));
     }
 
     /**
@@ -182,7 +212,13 @@ class Profiler
             $slug = $module->getSlug();
 
             // Fire after hook.
-            $storage[$slug] = $module->getStorage();
+            $storage['modules'][$slug] = $module->getStorage();
+
+            // Extract the global data array.
+            $global = array_get($storage, 'global', []);
+
+            // Attach the global data array.
+            $storage['global'] = array_merge($global, $module->getGlobal());
         }
 
         return $storage;
@@ -216,5 +252,16 @@ class Profiler
     public function disable()
     {
         $this->enabled = false;
+    }
+
+    /**
+     * Retrieve a module by its slug.
+     *
+     * @param  string $module
+     * @return mixed
+     */
+    public function getModule($module)
+    {
+        return $this->modules[$module];
     }
 }

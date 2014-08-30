@@ -1,14 +1,22 @@
+<h1>Previous Requests</h1>
+@if (count($history))
 <table class="anbu-table">
     <thead>
         <tr>
-            <th>Request</th>
+            <th>Time</th>
+            <th>URI</th>
         </tr>
     </thead>
     <tbody>
         @foreach($history as $storage)
         <tr>
-            <td><a href="/anbu/{{ $storage['id'] }}">{{ $storage['created_at'] }}</a></td>
+            <?php $date = new Carbon\Carbon($storage['created_at']); ?>
+            <td><a href="/anbu/{{ $storage['id'] }}">{{ $date->format('l jS F g:i:s A') }}</a><span class="friendly-time">({{ $date->diffForHumans() }})</span></td>
+            <td class="code">{{ $storage['uri'] }}</td>
         </tr>
         @endforeach
     </tbody>
 </table>
+@else
+<div class="empty">No previous requests are present.</div>
+@endif

@@ -22,20 +22,26 @@ class ProfilerController extends BaseController
         // Unserialize the storage array from the record.
         $storage = unserialize($record->storage);
 
+        // Extract the module collection.
+        $modules = array_get($storage, 'modules', []);
+
         // Retrieve the current module.
-        $module = array_get($storage, $module, []);
+        $module = array_get($modules, $module, []);
 
         // Nest history information.
         $module['data']['history'] = $this->fetchHistory();
 
         // Nest the menu within the module.
-        $module['menu'] = $this->buildMenu($storage, $record->id);
+        $storage['menu'] = $this->buildMenu($modules, $record->id);
 
         // Retrieve the child view.
-        $module['child'] = $this->renderChildView($module);
+        $storage['child'] = $this->renderChildView($module);
+
+        // Embed the current module.
+        $storage['current'] = $module;
 
         // Render the index template.
-        return View::make('anbu::index', $module);
+        return View::make('anbu::index', $storage);
     }
 
     /**
@@ -89,30 +95,35 @@ class ProfilerController extends BaseController
     /**
      * Build a side menu from the storage.
      *
-     * @param  array  $storage
+     * @param  array  $modules
      * @param  int    $key
      * @return array
      */
-    protected function buildMenu($storage, $key)
+    protected function buildMenu($modules, $key)
     {
         // Create buffer.
         $menu = [];
 
         // Iterate modules.
-        foreach ($storage as $module) {
+        foreach ($modules as $module) {
 
             // Get the slug.
             $slug = array_get($module, 'slug');
 
-            // Add a new menu item to the buffer.
-            $menu[] = [
-                'title' => array_get($module, 'name'),
-                'slug' => $slug,
-                /**
-                 * @todo Use url helper here.
-                 */
-                'url' => sprintf('/anbu/%s/%s', $key, $slug)
-            ];
+            if (array_get($module, 'inMenu', true)) {
+                // Add a new menu item to the buffer.
+                $menu[] = [
+                    'title' => array_get($module, 'name'),
+                    'slug' => $slug,
+                    /**
+                     * @todo Use url helper here.
+                     */
+                    'url' => sprintf('/anbu/%s/%s', $key, $slug),
+                    'icon' => array_get($module, 'icon'),
+                    'badge' => array_get($module, 'badge')
+                ];
+            }
+
         }
 
         // Return the menu array.
