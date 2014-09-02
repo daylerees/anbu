@@ -42,6 +42,17 @@ class Timers extends Module
     protected $startTimes = [];
 
     /**
+     * Executed during service provider loading.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // Set timers array.
+        $this->data['times'] = [];
+    }
+
+    /**
      * Start a profile timer.
      *
      * @param  mixed $key
