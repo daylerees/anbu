@@ -35,6 +35,18 @@ class QueryLogger extends Module
     protected $icon = 'database';
 
     /**
+     * SQL keywords to highlight.
+     *
+     * @var array
+     */
+    protected $keywords = [
+        'create',
+        'from',
+        'where',
+        'select'
+    ];
+
+    /**
      * Executed during service provider loading.
      *
      * @return void
@@ -58,8 +70,25 @@ class QueryLogger extends Module
      */
     public function queryEventFired()
     {
+        // Get the arguments.
+        $args = func_get_args();
+
+        // Highlight SQL terms.
+        $args[0] = $this->highlightQuery($args[0]);
+
         // Add the query to the buffer.
-        $this->data['queries'][] = func_get_args();
+        $this->data['queries'][] = $args;
+    }
+
+    protected function highlightQuery($query)
+    {
+        foreach ($this->keywords as $keyword) {
+            $query = preg_replace("/({$keyword})/", '<span class="sql-keyword">$1</span>', $query);
+        }
+
+        $query = preg_replace('/\`(.*?)\`/', '`<span class="sql-value">$1</span>`', $query);
+
+        return $query;
     }
 
     /**

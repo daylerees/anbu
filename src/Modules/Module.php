@@ -43,6 +43,13 @@ abstract class Module
     protected $template = 'default';
 
     /**
+     * Dashboard widget template.
+     *
+     * @var string
+     */
+    protected $widget = 'widget';
+
+    /**
      * Count to show on menu.
      *
      * @var integer
@@ -152,6 +159,16 @@ abstract class Module
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * Get the dashboard widget template view for this module.
+     *
+     * @return string
+     */
+    public function getWidget()
+    {
+        return $this->widget;
     }
 
     /**

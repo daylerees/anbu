@@ -4,6 +4,7 @@ namespace Anbu\Controllers;
 
 use View;
 use Anbu\Models\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfilerController extends BaseController
 {
@@ -16,8 +17,13 @@ class ProfilerController extends BaseController
      */
     public function index($key = null, $module = 'dashboard')
     {
-        // Get the storage record.
-        $record = $this->fetchStorage($key);
+        try {
+            // Get the storage record.
+            $record = $this->fetchStorage($key);
+
+        } catch (ModelNotFoundException $exception) {
+            return View::make('anbu::error');
+        }
 
         // Unserialize the storage array from the record.
         $storage = unserialize($record->storage);
@@ -39,6 +45,9 @@ class ProfilerController extends BaseController
 
         // Embed the current module.
         $storage['current'] = $module;
+
+        // Embed the creation date.
+        $storage['date'] = $record->created_at;
 
         // Render the index template.
         return View::make('anbu::index', $storage);

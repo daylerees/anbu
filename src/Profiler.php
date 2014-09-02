@@ -177,6 +177,7 @@ class Profiler
         // Save record.
         $storage->save();
 
+        // Attach the button to the view.
         echo $this->app->make('view')->make('anbu::button', compact('storage'));
     }
 

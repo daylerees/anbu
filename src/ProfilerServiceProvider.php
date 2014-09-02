@@ -23,6 +23,9 @@ class ProfilerServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Ensure that required database table exists.
+        $this->installTable();
+
         // Instantiate the profiler.
         $anbu = $this->app->make('Anbu\\Profiler');
 
@@ -77,5 +80,30 @@ class ProfilerServiceProvider extends ServiceProvider
 
         // Register anbu directory as view namespace.
         $view->addNamespace('anbu', __DIR__);
+    }
+
+    /**
+     * Install the Anbu database table.
+     *
+     * @return void
+     */
+    protected function installTable()
+    {
+        // Get the schema builder component.
+        $schema = $this->app['db']->connection()->getSchemaBuilder();
+
+        // Check if anbu table already exists.
+        if (!$schema->hasTable('anbu')) {
+
+            // Create anbu database table.
+            $schema->create('anbu', function ($table) {
+
+                // Define fields.
+                $table->increments('id');
+                $table->string('uri')->nullable();
+                $table->longText('storage');
+                $table->timestamps();
+            });
+        }
     }
 }

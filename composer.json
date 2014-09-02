@@ -1,6 +1,17 @@
 {
+    "name": "daylerees/anbu",
+    "description": "The Anbu profiler for Laravel 4.",
+    "keywords": ["laravel", "anbu", "profiler", "debug"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dayle Rees",
+            "email": "me@daylerees.com",
+            "homepage": "http://daylerees.com"
+        }
+    ],
     "require": {
-        "laravel/framework": "4.2.*"
+        "laravel/framework": "4.*"
     },
     "require-dev": {
         "phpunit/phpunit":   "4.2.2",

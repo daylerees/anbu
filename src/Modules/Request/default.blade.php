@@ -11,7 +11,7 @@
         @foreach($request as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td>{{ $value }}</td>
+            <td>{{ str_limit($value) }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -33,7 +33,7 @@
         @foreach($headers as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ $value[0] }}</td>
+            <td class="code">{{ str_limit($value[0]) }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -55,7 +55,7 @@
         @foreach($server as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ $value }}</td>
+            <td class="code">{{ str_limit($value) }}</td>
         </tr>
         @endforeach
     </tbody>

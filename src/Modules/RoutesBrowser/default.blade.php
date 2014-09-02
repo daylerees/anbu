@@ -27,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($routes as $route)
+        @foreach(array_reverse($routes) as $route)
         <tr>
             <td>
             @foreach ($route[0] as $method)
