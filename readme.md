@@ -1,3 +1,5 @@
+[ ![Codeship Status for daylerees/anbu](https://www.codeship.io/projects/1657b700-1681-0132-af64-5ae52864a4c1/status?branch=master)](https://www.codeship.io/projects/33889)
+
 # Notice
 
 This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works, but don't file issues or PRs yet!
