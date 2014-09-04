@@ -41,6 +41,7 @@ class Profiler
         'Anbu\Modules\Request\Request',
         'Anbu\Modules\QueryLogger\QueryLogger',
         'Anbu\Modules\Logger\Logger',
+        'Anbu\Modules\Debug\Debug',
         'Anbu\Modules\Timers\Timers',
         'Anbu\Modules\History\History'
     ];

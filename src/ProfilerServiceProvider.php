@@ -7,21 +7,11 @@ use Illuminate\Support\ServiceProvider;
 class ProfilerServiceProvider extends ServiceProvider
 {
     /**
-     * Register Artisan commands.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->commands('Anbu\\Commands\\InstallCommand');
-    }
-
-    /**
      * Register the Anbu profiler.
      *
      * @return void
      */
-    public function register()
+    public function boot()
     {
         // Ensure that required database table exists.
         $this->installTable();
@@ -43,6 +33,16 @@ class ProfilerServiceProvider extends ServiceProvider
 
         // Register Anbu view namespace.
         $this->registerViewNamespace();
+    }
+
+    /**
+     * Register the Anbu profiler.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
     }
 
     /**

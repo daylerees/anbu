@@ -22,11 +22,16 @@ class ProfilerController extends BaseController
             $record = $this->fetchStorage($key);
 
         } catch (ModelNotFoundException $exception) {
+
+            // On failure show the error page.
             return View::make('anbu::error');
         }
 
         // Unserialize the storage array from the record.
         $storage = unserialize($record->storage);
+
+        // Embed the current URI.
+        $storage['uri'] = $record->uri;
 
         // Extract the module collection.
         $modules = array_get($storage, 'modules', []);
@@ -80,7 +85,7 @@ class ProfilerController extends BaseController
     protected function fetchHistory()
     {
         // We want fresh history.
-        return Storage::orderBy('id', 'desc')->get()->toArray();
+        return Storage::orderBy('id', 'desc')->paginate(15);
     }
 
     /**

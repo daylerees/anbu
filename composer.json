@@ -20,6 +20,9 @@
     "autoload": {
         "psr-4": {
             "Anbu\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     }
 }

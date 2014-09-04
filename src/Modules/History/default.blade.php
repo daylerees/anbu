@@ -15,13 +15,16 @@
     <tbody>
         @foreach($history as $storage)
         <tr>
+            <?php $storage = $storage->toArray(); ?>
             <?php $date = new Carbon\Carbon($storage['created_at']); ?>
             <td><a href="{{ url('/anbu') .'/'. $storage['id'] }}">{{ $date->format('l jS F g:i:s A') }}</a><span class="friendly-time">({{ $date->diffForHumans() }})</span></td>
             <td class="code">{{ $storage['uri'] }}</td>
         </tr>
         @endforeach
+
     </tbody>
 </table>
+{{ $history->links() }}
 @else
 <div class="empty">No previous requests are present.</div>
 @endif
