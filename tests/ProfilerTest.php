@@ -9,12 +9,12 @@ class ProfilerTest extends PHPUnit_Framework_TestCase
 {
     public function testThatProfilerCanBeCreated()
     {
-        $p = new Profiler;
+        $p = new Profiler(new Repo);
     }
 
     public function testThatDefaultModulesCanBeSet()
     {
-        $p = new Profiler;
+        $p = new Profiler(new Repo);
         $p->setDefaultModules([
             'FirstDummyModule',
             'SecondDummyModule'
@@ -23,7 +23,7 @@ class ProfilerTest extends PHPUnit_Framework_TestCase
 
     public function testThatProfilerCanRegisterModules()
     {
-        $p = new Profiler;
+        $p = new Profiler(new Repo);
         $p->setDefaultModules([
             'FirstDummyModule',
             'SecondDummyModule'
@@ -46,4 +46,12 @@ class FirstDummyModule extends Module
 class SecondDummyModule extends Module
 {
 
+}
+
+class Repo implements Anbu\Repositories\Repository
+{
+    public function get($key = null){}
+    public function put(Anbu\Models\Storage $storage){}
+    public function all(){}
+    public function clear(){}
 }
