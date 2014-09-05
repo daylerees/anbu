@@ -35,7 +35,7 @@ class RoutesBrowser extends Module
     protected $icon = 'road';
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */
@@ -71,6 +71,7 @@ class RoutesBrowser extends Module
             $current->getActionName()                         // Action
         ];
 
+        // Set badge to number of registered routes.
         $this->badge = count($this->data['routes']);
     }
 

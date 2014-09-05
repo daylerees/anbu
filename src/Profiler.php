@@ -4,17 +4,30 @@ namespace Anbu;
 
 use Anbu\Modules\Module;
 use Anbu\Models\Storage;
+use Anbu\Repositories\Repository;
 use Illuminate\Foundation\Application;
 use Anbu\Exceptions\InvalidModuleException;
 
 class Profiler
 {
     /**
+     * Anbu version number.
+     */
+    const VERSION = 'ALPHA';
+
+    /**
      * Laravel application instance.
      *
      * @var Application
      */
     protected $app;
+
+    /**
+     * Set the storage repository.
+     *
+     * @var Repository
+     */
+    protected $repository;
 
     /**
      * Registered Anbu modules.
@@ -45,6 +58,17 @@ class Profiler
         'Anbu\Modules\Timers\Timers',
         'Anbu\Modules\History\History'
     ];
+
+    /**
+     * Inject the storage repository.
+     *
+     * @param  Repository $repository
+     */
+    public function __construct(Repository $repository)
+    {
+        // Set the storage repository.
+        $this->repository = $repository;
+    }
 
     /**
      * Register Anbu profiler modules.
@@ -127,7 +151,7 @@ class Profiler
         $module->setApplication($this->app);
 
         // Trigger module registration hook.
-        $module->register();
+        $module->before();
 
         // Add to module collection.
         $this->modules[$module->getSlug()] = $module;
@@ -157,29 +181,55 @@ class Profiler
             // Exit, we don't want to log requests to the profiler.
             return;
         }
+
         // Execute the after hook for each module.
         $this->executeModuleAfterHooks();
 
+        // Store the module and return it.
+        $storage = $this->storeModuleData();
+
+        // Attach the button to the view.
+        echo $this->app->make('view')->make('anbu::button', compact('storage'));
+    }
+
+    /**
+     * Storage module data using the repository.
+     *
+     * @return Storage
+     */
+    protected function storeModuleData()
+    {
         // Create new storage record.
         $storage = new Storage;
 
+        // Store the current URI.
+        $storage->uri = $this->getCurrentRequestUri();
+
+        // Fetch module storage array and set on record.
+        $storage->storage = gzencode(serialize($this->fetchStorage()), 9);
+
+        // Use the repository to save the storage.
+        $this->repository->put($storage);
+
+        // Return the storage object.
+        return $storage;
+    }
+
+    /**
+     * Get the URI for the current request.
+     *
+     * @return string
+     */
+    protected function getCurrentRequestUri()
+    {
         // Get the routing component.
         $current = $this->app->make('router')->current();
 
         // Get the current request.
         $request = $this->app->make('request');
 
-        // Save the current request.
-        $storage->uri = "{$request->method()} {$current->getPath()}";
-
-        // Fetch module storage array and set on record.
-        $storage->storage = serialize($this->fetchStorage());
-
-        // Save record.
-        $storage->save();
-
-        // Attach the button to the view.
-        echo $this->app->make('view')->make('anbu::button', compact('storage'));
+        // Return the current request.
+        return "{$request->method()} {$current->getPath()}";
     }
 
     /**
@@ -214,13 +264,7 @@ class Profiler
             $slug = $module->getSlug();
 
             // Fire after hook.
-            $storage['modules'][$slug] = $module->getStorage();
-
-            // Extract the global data array.
-            $global = array_get($storage, 'global', []);
-
-            // Attach the global data array.
-            $storage['global'] = array_merge($global, $module->getGlobal());
+            $storage[$slug] = $module->getStorage();
         }
 
         return $storage;
@@ -254,6 +298,16 @@ class Profiler
     public function disable()
     {
         $this->enabled = false;
+    }
+
+    /**
+     * Get the collection of modules.
+     *
+     * @return array
+     */
+    public function getModules()
+    {
+        return $this->modules;
     }
 
     /**

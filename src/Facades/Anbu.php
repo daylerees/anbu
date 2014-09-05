@@ -16,7 +16,7 @@ class Anbu
     public static function __callStatic($method, $args)
     {
         // Resolve profiler from container.
-        $profiler = App::make('anbu');
+        $profiler = App::make('Anbu\\Profiler');
 
         // Return the module instance by method name.
         return $profiler->getModule($method);

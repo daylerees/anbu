@@ -2,6 +2,8 @@
 
 namespace Anbu\Controllers;
 
+use Response;
+
 class AssetController extends BaseController
 {
     /**
@@ -13,9 +15,27 @@ class AssetController extends BaseController
      */
     public function index($module, $path)
     {
-        /**
-         * @todo Allow asset proxy.
-         */
-        echo 'Asset here!';
+        // Get the module from the profiler.
+        $module = $this->profiler->getModule($module);
+
+        // Check for asset existance.
+        $mime = array_get($module->getAssets(), $path, false);
+
+        // If we have a mime type.
+        if ($mime) {
+
+            // Get the module path.
+            $modulePath = $module->getPath();
+
+            // Load the asset from disk.
+            $content = file_get_contents("{$modulePath}//{$path}");
+
+            // Serve the asset with a mime type.
+            return Response::make($content, 200, array('Content-Type' => $mime));
+
+        }
+
+        // Asset could not be found.
+        return Response::make('Asset not found.', 404);
     }
 }

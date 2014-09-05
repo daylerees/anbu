@@ -35,7 +35,7 @@ class Request extends Module
     protected $icon = 'refresh';
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */

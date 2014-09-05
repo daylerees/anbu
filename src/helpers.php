@@ -7,6 +7,6 @@ if(!function_exists('ad')) {
     function ad($value) {
 
         // Pass to anbu container instance.
-        app('anbu')->getModule('debug')->debug($value);
+        app('Anbu\\Profiler')->getModule('debug')->debug($value);
     }
 }

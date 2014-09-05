@@ -3,8 +3,10 @@
 namespace Anbu\Controllers;
 
 use View;
+use Exception;
+use Anbu\Modules\Module;
 use Anbu\Models\Storage;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Anbu\Services\MenuBuilder;
 
 class ProfilerController extends BaseController
 {
@@ -18,129 +20,100 @@ class ProfilerController extends BaseController
     public function index($key = null, $module = 'dashboard')
     {
         try {
-            // Get the storage record.
-            $record = $this->fetchStorage($key);
 
-        } catch (ModelNotFoundException $exception) {
+            // Get a storage record from the repository.
+            $record = $this->repository->get($key);
+
+        } catch (Exception $exception) {
 
             // On failure show the error page.
             return View::make('anbu::error');
         }
 
-        // Unserialize the storage array from the record.
-        $storage = unserialize($record->storage);
+        // Hydrate modules from storage.
+        $this->hydrator->hydrate($record);
 
-        // Embed the current URI.
-        $storage['uri'] = $record->uri;
+        // Get the current module.
+        $module = $this->profiler->getModule($module);
 
-        // Extract the module collection.
-        $modules = array_get($storage, 'modules', []);
+        // Get the profiler view data.
+        $data = $this->buildViewData($record, $module);
 
-        // Retrieve the current module.
-        $module = array_get($modules, $module, []);
-
-        // Nest history information.
-        $module['data']['history'] = $this->fetchHistory();
-
-        // Nest the menu within the module.
-        $storage['menu'] = $this->buildMenu($modules, $record->id);
-
-        // Retrieve the child view.
-        $storage['child'] = $this->renderChildView($module);
-
-        // Embed the current module.
-        $storage['current'] = $module;
-
-        // Embed the creation date.
-        $storage['date'] = $record->created_at;
-
-        // Render the index template.
-        return View::make('anbu::index', $storage);
+        // Render the profiler template.
+        return View::make('anbu::index', $data);
     }
 
     /**
-     * Fetch a storage record.
+     * Build the profiler view data array.
      *
-     * @param  int $key
-     * @return Storage
+     * @param  Storage $record
+     * @param  Module  $module
+     * @return array
      */
-    protected function fetchStorage($key)
+    protected function buildViewData(Storage $record, Module $module)
     {
-        // If we have a storage key.
-        if ($key) {
+        // Get global data array.
+        $data = $this->getGlobalData($record);
 
-            // Load the storage record using that key.
-            return Storage::findOrFail($key);
+        // Nest the child view.
+        array_set($data, 'child', $this->renderModule($module));
+
+        // Nest current module
+        array_set($data, 'current', $module);
+
+        // Return view data array.
+        return $data;
+    }
+
+    /**
+     * Get the global data collection.
+     *
+     * @param  Storage $record
+     * @return array
+     */
+    protected function getGlobalData(Storage $record)
+    {
+        // Global data buffer.
+        $global = [];
+
+        // Get the live module array.
+        $modules = $this->profiler->getModules();
+
+        // Iterate modules.
+        foreach ($modules as $module) {
+
+            // Extract global data from module.
+            $data = $module->getGlobal();
+
+            // Merge with global data array.
+            $global = array_merge($data, $global);
         }
 
-        // Or get the latest record.
-        return Storage::orderBy('id', 'desc')->firstOrFail();
-    }
+        // Nest the menu into the global data.
+        $global['menu'] = with(new MenuBuilder)->build($modules, $record->id);
 
-    /**
-     * Nest fresh history. This is a special case.
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    protected function fetchHistory()
-    {
-        // We want fresh history.
-        return Storage::orderBy('id', 'desc')->paginate(15);
+        // Return global data.
+        return $global;
     }
 
     /**
      * Render the child view for a module.
      *
-     * @param  array  $module
+     * @param  Module $module
      * @return View
      */
-    protected function renderChildView(array $module)
+    protected function renderModule(Module $module)
     {
         // Add a module view namespace for this request.
-        View::addNamespace('anbu_module', $module['path']);
+        View::addNamespace('anbu_module', $module->getPath());
 
-        // Extract template.
-        $template = $module['template'];
+        // Execute live module hook.
+        $module->live();
+
+        // Extract template name.
+        $template = $module->getTemplate();
 
         // Return rendered template view.
-        return View::make("anbu_module::{$template}", $module['data']);
-    }
-
-    /**
-     * Build a side menu from the storage.
-     *
-     * @param  array  $modules
-     * @param  int    $key
-     * @return array
-     */
-    protected function buildMenu($modules, $key)
-    {
-        // Create buffer.
-        $menu = [];
-
-        // Iterate modules.
-        foreach ($modules as $module) {
-
-            // Get the slug.
-            $slug = array_get($module, 'slug');
-
-            if (array_get($module, 'inMenu', true)) {
-                // Add a new menu item to the buffer.
-                $menu[] = [
-                    'title' => array_get($module, 'name'),
-                    'slug' => $slug,
-                    /**
-                     * @todo Use url helper here.
-                     */
-                    'url' => sprintf('/anbu/%s/%s', $key, $slug),
-                    'icon' => array_get($module, 'icon'),
-                    'badge' => array_get($module, 'badge')
-                ];
-            }
-
-        }
-
-        // Return the menu array.
-        return $menu;
+        return View::make("anbu_module::{$template}", $module->getData());
     }
 }

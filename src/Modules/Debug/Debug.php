@@ -36,12 +36,13 @@ class Debug extends Module
     protected $icon = 'eye';
 
     /**
-     * Executed during service provider loading.
+     * Executed before the profiled request.
      *
      * @return void
      */
-    public function register()
+    public function before()
     {
+        // Initialize debugs array.
         $this->data['debugs'] = [];
     }
 
@@ -63,12 +64,13 @@ class Debug extends Module
     }
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */
     public function after()
     {
+        // Set badge count to number of debug entries.
         $this->badge = count($this->data['debugs']);
     }
 }

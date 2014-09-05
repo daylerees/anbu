@@ -42,11 +42,11 @@ class Timers extends Module
     protected $startTimes = [];
 
     /**
-     * Executed during service provider loading.
+     * Executed before the profiled request.
      *
      * @return void
      */
-    public function register()
+    public function before()
     {
         // Set timers array.
         $this->data['times'] = [];
@@ -94,7 +94,7 @@ class Timers extends Module
     }
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */

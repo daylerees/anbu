@@ -12,4 +12,15 @@ class Storage extends Model
      * @var string
      */
     public $table = 'anbu';
+
+    /**
+     * Retrieve the unserialized data.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        // Get the unserialized storage.
+        return unserialize(gzdecode($this->storage));
+    }
 }

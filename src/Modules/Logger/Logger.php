@@ -35,11 +35,11 @@ class Logger extends Module
     protected $icon = 'align-left';
 
     /**
-     * Executed during service provider loading.
+     * Executed before the profiled request.
      *
      * @return void
      */
-    public function register()
+    public function before()
     {
         // Retrieve the events compontent.
         $event = $this->app->make('events');
@@ -63,12 +63,13 @@ class Logger extends Module
     }
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */
     public function after()
     {
+        // Set badge to number of logs.
         $this->badge = count($this->data['logs']);
     }
 }

@@ -47,11 +47,11 @@ class QueryLogger extends Module
     ];
 
     /**
-     * Executed during service provider loading.
+     * Executed before the profiled request.
      *
      * @return void
      */
-    public function register()
+    public function before()
     {
         // Retrieve the events component.
         $event = $this->app->make('events');
@@ -92,7 +92,7 @@ class QueryLogger extends Module
     }
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */

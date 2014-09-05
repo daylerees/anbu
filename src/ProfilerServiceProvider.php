@@ -7,14 +7,31 @@ use Illuminate\Support\ServiceProvider;
 class ProfilerServiceProvider extends ServiceProvider
 {
     /**
+     * Default storage repository.
+     */
+    const DEFAULT_REPO = 'Anbu\\Repositories\\DatabaseRepository';
+
+    /**
      * Register the Anbu profiler.
      *
      * @return void
      */
     public function boot()
     {
+        // Register clear command.
+        $this->commands('Anbu\\Commands\\ClearCommand');
+
         // Ensure that required database table exists.
         $this->installTable();
+
+        // Get the configuration component.
+        $config = $this->app->make('config');
+
+        // Get the repository class.
+        $repo = $config->get('anbu.repository', self::DEFAULT_REPO);
+
+        // Bind the storage repository.
+        $this->app->bind('Anbu\\Repositories\\Repository', $repo);
 
         // Instantiate the profiler.
         $anbu = $this->app->make('Anbu\\Profiler');
@@ -26,7 +43,7 @@ class ProfilerServiceProvider extends ServiceProvider
         $anbu->registerListeners();
 
         // Bind within container.
-        $this->app->instance('anbu', $anbu);
+        $this->app->instance('Anbu\\Profiler', $anbu);
 
         // Register routes.
         $this->registerRoutes();
@@ -101,7 +118,7 @@ class ProfilerServiceProvider extends ServiceProvider
                 // Define fields.
                 $table->increments('id');
                 $table->string('uri')->nullable();
-                $table->longText('storage');
+                $table->binary('storage');
                 $table->timestamps();
             });
         }

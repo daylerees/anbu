@@ -36,12 +36,13 @@ class Dashboard extends Module
     protected $icon = 'dashboard';
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */
     public function after()
     {
+        // Bind Laravel version information.
         $this->global['version'] = Application::VERSION;
     }
 }

@@ -8,6 +8,11 @@ use Illuminate\Foundation\Application;
 abstract class Module
 {
     /**
+     * Menu URL format.
+     */
+    const URL = 'anbu/%s/%s';
+
+    /**
      * The display name of the module.
      *
      * @var string
@@ -64,11 +69,11 @@ abstract class Module
     protected $inMenu = true;
 
     /**
-     * An array of accessible assets.
+     * An array of data that will be global to the profiler.
      *
      * @var array
      */
-    protected $assets = [];
+    protected $global = [];
 
     /**
      * An array of data for the rendering of this module.
@@ -78,11 +83,11 @@ abstract class Module
     protected $data = [];
 
     /**
-     * Global values for the profiler.
+     * An array of accessible assets.
      *
      * @var array
      */
-    protected $global = [];
+    protected $assets = [];
 
     /**
      * Laravel application instance for the current request.
@@ -92,23 +97,33 @@ abstract class Module
     protected $app;
 
     /**
-     * Executed during service provider loading.
+     * Executed before the profiled request.
      *
      * @return void
      */
-    public function register()
+    public function before()
     {
         // Called during service provider registration.
     }
 
     /**
-     * Execute after framework request cycle.
+     * Executed after the profiled request.
      *
      * @return void
      */
     public function after()
     {
         // Called after the framework request cycle.
+    }
+
+    /**
+     * Executed during the profiler request cycle.
+     *
+     * @return void
+     */
+    public function live()
+    {
+        // Called in the profiler request.
     }
 
     /**
@@ -172,6 +187,17 @@ abstract class Module
     }
 
     /**
+     * Set the badge count for this module.
+     *
+     * @param  integer $count
+     * @return void
+     */
+    public function setBadge($badge)
+    {
+        $this->badge = $badge;
+    }
+
+    /**
      * Get the badge count for this module.
      *
      * @return integer
@@ -182,13 +208,24 @@ abstract class Module
     }
 
     /**
-     * Get an array of accessible assets for this module.
+     * Show this module in the menu?
      *
-     * @return array
+     * @return bool
      */
-    public function getAssets()
+    public function inMenu()
     {
-        return $this->assets;
+        return $this->inMenu;
+    }
+
+    /**
+     * Set the data array.
+     *
+     * @param  array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
     }
 
     /**
@@ -202,13 +239,34 @@ abstract class Module
     }
 
     /**
-     * Access the modules template global data array.
+     * Set the global data array.
+     *
+     * @param  array $global
+     * @return void
+     */
+    public function setGlobal(array $global)
+    {
+        $this->global = $global;
+    }
+
+    /**
+     * Get global data array.
      *
      * @return array
      */
     public function getGlobal()
     {
         return $this->global;
+    }
+
+    /**
+     * Get an array of accessible assets for this module.
+     *
+     * @return array
+     */
+    public function getAssets()
+    {
+        return $this->assets;
     }
 
     /**
@@ -243,14 +301,26 @@ abstract class Module
     public function getStorage()
     {
         return [
-            'name'          => $this->name,
-            'slug'          => $this->slug,
-            'icon'          => $this->getIcon(),
-            'path'          => $this->getPath(),
-            'template'      => $this->template,
-            'badge'         => $this->badge,
-            'inMenu'        => $this->inMenu,
-            'data'          => $this->data
+            'data'          => $this->data,
+            'global'        => $this->global,
+            'badge'         => $this->badge
+        ];
+    }
+
+    /**
+     * Build a menu item for this module.
+     *
+     * @param  string $key
+     * @return array
+     */
+    public function getMenuItem($key)
+    {
+        return [
+            'title'     => $this->name,
+            'slug'      => $this->slug,
+            'url'       => url(sprintf(self::URL, $key, $this->slug)),
+            'icon'      => $this->icon,
+            'badge'     => $this->badge,
         ];
     }
 }

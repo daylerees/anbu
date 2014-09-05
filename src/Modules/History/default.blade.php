@@ -24,7 +24,6 @@
 
     </tbody>
 </table>
-{{ $history->links() }}
 @else
 <div class="empty">No previous requests are present.</div>
 @endif
