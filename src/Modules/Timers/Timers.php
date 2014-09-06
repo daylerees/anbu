@@ -42,6 +42,13 @@ class Timers extends Module
     protected $startTimes = [];
 
     /**
+     * Does this module have a dashboard widget?
+     *
+     * @var boolean
+     */
+    protected $hasWidget = true;
+
+    /**
      * Executed before the profiled request.
      *
      * @return void
@@ -96,9 +103,11 @@ class Timers extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         $this->badge = count($this->data['times']);
     }

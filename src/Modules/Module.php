@@ -69,6 +69,13 @@ abstract class Module
     protected $inMenu = true;
 
     /**
+     * Does this module have a dashboard widget?
+     *
+     * @var boolean
+     */
+    protected $hasWidget = false;
+
+    /**
      * An array of data that will be global to the profiler.
      *
      * @var array
@@ -109,9 +116,11 @@ abstract class Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         // Called after the framework request cycle.
     }
@@ -215,6 +224,16 @@ abstract class Module
     public function inMenu()
     {
         return $this->inMenu;
+    }
+
+    /**
+     * Does this module have a widget?
+     *
+     * @return boolean
+     */
+    public function hasWidget()
+    {
+        return $this->hasWidget;
     }
 
     /**

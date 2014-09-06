@@ -57,9 +57,11 @@ class History extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         // Bind the current URI to global data.
         $this->global['uri'] = $this->getCurrentRequestUri();
@@ -73,7 +75,13 @@ class History extends Module
     public function live()
     {
         // Bind all requests to data array.
-        $this->data['history'] = $this->repository->all();
+        $history = $this->repository->all();
+
+        // Get pagination component.
+        $paginator = $this->app->make('paginator');
+
+        // Create paginator.
+        $this->data['history'] = $paginator->make($history, count($history), 5);
     }
 
     /**

@@ -37,9 +37,11 @@ class RoutesBrowser extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         // Get hold of the router component.
         $router = $this->app->make('router');

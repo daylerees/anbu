@@ -1,5 +1,5 @@
 <h1>Timers</h1>
-@if (count($times))
+@if (isset($times) && count($times))
 <table class="anbu-table">
     <thead>
         <tr>

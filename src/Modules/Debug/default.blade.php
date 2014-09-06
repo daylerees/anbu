@@ -1,5 +1,5 @@
 <h1>Debug</h1>
-@if (count($debugs))
+@if (isset($debugs) && count($debugs))
         @foreach($debugs as $debug)
         <div class="debug">{{ $debug }}</div>
         @endforeach

@@ -171,9 +171,11 @@ class Profiler
     /**
      * Execute hooks after the frameworks request cycle.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function executeAfterHook()
+    public function executeAfterHook($request, $response)
     {
         // If the profiler is disabled...
         if (!$this->isEnabled()) {
@@ -183,13 +185,20 @@ class Profiler
         }
 
         // Execute the after hook for each module.
-        $this->executeModuleAfterHooks();
+        $this->executeModuleAfterHooks($request, $response);
 
         // Store the module and return it.
         $storage = $this->storeModuleData();
 
-        // Attach the button to the view.
-        echo $this->app->make('view')->make('anbu::button', compact('storage'));
+        // Get content type header.
+        $type = $response->headers->get('Content-Type');
+
+        // Check for JSON in the header.
+        if (!strstr($type, 'json')) {
+
+            // Append button to response.
+            echo $this->app->make('view')->make('anbu::button', compact('storage'));
+        }
     }
 
     /**
@@ -235,15 +244,17 @@ class Profiler
     /**
      * Execute the after hook for active modules.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    protected function executeModuleAfterHooks()
+    protected function executeModuleAfterHooks($request, $response)
     {
         // Iterate modules.
         foreach ($this->modules as $module) {
 
             // Fire after hook.
-            $module->after();
+            $module->after($request, $response);
         }
     }
 

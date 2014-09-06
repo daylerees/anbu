@@ -80,23 +80,36 @@ class QueryLogger extends Module
         $this->data['queries'][] = $args;
     }
 
+    /**
+     * Highlight the executed query.
+     *
+     * @param  string $query
+     * @return string
+     */
     protected function highlightQuery($query)
     {
+        // Iterate keywords.
         foreach ($this->keywords as $keyword) {
+
+            // Wrap keywords in tag.
             $query = preg_replace("/({$keyword})/", '<span class="sql-keyword">$1</span>', $query);
         }
 
+        // Wrap values in a tag.
         $query = preg_replace('/\`(.*?)\`/', '`<span class="sql-value">$1</span>`', $query);
 
+        // Return query string.
         return $query;
     }
 
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         $this->badge = count($this->data['queries']);
     }

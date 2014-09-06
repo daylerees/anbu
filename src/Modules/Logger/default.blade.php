@@ -1,5 +1,5 @@
 <h1>Logs</h1>
-@if (count($logs))
+@if (isset($logs) && count($logs))
 <table class="anbu-table">
     <thead>
         <tr>

@@ -1,39 +1,15 @@
 <h1>Dashboard</h1>
 
+@if (isset($widgets) && count($widgets))
 <div class="widgets">
+    @foreach($widgets as $widget)
     <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
+        <span class="widget-badge"><span class="widget-badge-count">{{ $widget->badge }}</span></span>
+        <h1>{{ $widget->name }}</h1>
+        {{ $widget->view }}
     </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
-    <div class="widget">
-        <span class="widget-badge"><span class="widget-badge-count">3</span></span>
-        <h1>Widget</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet nulla eget risus laoreet, posuere tempor est lacinia.</p>
-    </div>
+    @endforeach
+@else
+<div class="empty">There are no widgets!</div>
+@endif
 </div>

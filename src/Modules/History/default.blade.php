@@ -3,7 +3,7 @@
 <a href="{{ url('/anbu') }}" class="latest-request">View Latest Request</a>
 
 <h1>Request History</h1>
-@if (count($history))
+@if (isset($history) && count($history))
 <p>Click on a title to replay a request and view debug information.</p>
 <table class="anbu-table">
     <thead>
@@ -24,6 +24,7 @@
 
     </tbody>
 </table>
+{{ $history->links() }}
 @else
 <div class="empty">No previous requests are present.</div>
 @endif

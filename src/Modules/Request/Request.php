@@ -37,20 +37,22 @@ class Request extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
-        // Get the request component from the container.
-        $input = $this->app->make('request');
-
         // Dump all request data into the class data array.
-        $this->data['request'] = $input->all();
+        $this->data['request'] = $request->all();
 
         // Place environmental variables into data array.
-        $this->data['server'] = $input->server();
+        $this->data['server'] = $request->server();
 
         // Place request headers in the data array.
-        $this->data['headers'] = $input->header();
+        $this->data['requestHeaders'] = $request->header();
+
+        // Place response headers in the data array.
+        $this->data['responseHeaders'] = $response->headers->all();
     }
 }

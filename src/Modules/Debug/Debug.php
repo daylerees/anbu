@@ -66,9 +66,11 @@ class Debug extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         // Set badge count to number of debug entries.
         $this->badge = count($this->data['debugs']);

@@ -1,10 +1,11 @@
 /**
  * Gulp Modules.
  */
-var gulp = require('gulp');
-var less = require('gulp-less');
-var path = require('path');
-var del  = require('del');
+var gulp    = require('gulp');
+var less    = require('gulp-less');
+var path    = require('path');
+var del     = require('del');
+var cssmin  = require('gulp-cssmin')
 
 /**
  * Set path to resources directory.
@@ -15,7 +16,7 @@ var resources = './resources/';
  * Remove old generated content.
  */
 gulp.task('clean', function(cb) {
-    del([resources + 'dist', resources + 'css'], cb);
+    del(['public/*'], cb);
 });
 
 /**
@@ -26,13 +27,25 @@ gulp.task('less', function () {
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
-    .pipe(gulp.dest(resources + 'dist'));
-    gulp.src(resources + 'fonts/*').pipe(gulp.dest(resources + 'dist/'));
+    .pipe(cssmin().on('error', function(err) {
+        console.log(err);
+    }))
+    .pipe(gulp.dest('public/'));
+    gulp.src(resources + 'fonts/*').pipe(gulp.dest('public/fonts/'));
+    gulp.src(resources + 'img/*').pipe(gulp.dest('public/img/'));
+});
+
+/**
+ * Move static assets.
+ */
+gulp.task('move', function () {
+    gulp.src(resources + 'fonts/*').pipe(gulp.dest('public/fonts/'));
+    gulp.src(resources + 'img/*').pipe(gulp.dest('public/img/'));
 });
 
 /**
  * Default Gulp Task.
  */
 gulp.task('default', ['clean'], function() {
-    gulp.start('less');
+    gulp.start('less', 'move');
 });

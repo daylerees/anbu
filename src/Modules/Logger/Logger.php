@@ -65,9 +65,11 @@ class Logger extends Module
     /**
      * Executed after the profiled request.
      *
+     * @param  Symfony/Component/HttpFoundation/Request  $response
+     * @param  Symfony/Component/HttpFoundation/Response $response
      * @return void
      */
-    public function after()
+    public function after($request, $response)
     {
         // Set badge to number of logs.
         $this->badge = count($this->data['logs']);

@@ -6,6 +6,7 @@
         <delete dir="${basedir}/node_modules"/>
     </target>
 
+    <!-- Download and install composer. -->
     <target name="composer">
         <get src="https://getcomposer.org/composer.phar" dest="${basedir}/composer.phar" />
         <exec dir="${basedir}" executable="php" failonerror="true">
@@ -13,12 +14,20 @@
         </exec>
     </target>
 
+    <!-- Install NPM modules. -->
     <target name="npm">
         <exec dir="${basedir}" executable="npm" failonerror="true">
             <arg line="install --ansi"></arg>
         </exec>
     </target>
 
+    <!-- Run Gulp -->
+    <target name="gulp">
+        <exec dir="${basedir}" executable="node" failonerror="true">
+            <arg line="node_modules/gulp/bin/gulp.js --ansi"></arg>
+        </exec>
+    </target>
+
     <!-- Execute the build process. -->
-    <target name="build" depends="clean,composer,npm"/>
+    <target name="build" depends="clean,composer,npm,gulp"/>
 </project>

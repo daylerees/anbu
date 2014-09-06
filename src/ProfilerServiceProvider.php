@@ -72,18 +72,6 @@ class ProfilerServiceProvider extends ServiceProvider
         // Get the router.
         $route = $this->app->make('router');
 
-        // Bind core asset controller route.
-        $route->get(
-            'anbu/asset/core/{path}',
-            'Anbu\\Controllers\\AssetController@core'
-        );
-
-        // Bind asset controller route.
-        $route->get(
-            'anbu/asset/{module}/{path}',
-            'Anbu\\Controllers\\AssetController@index'
-        );
-
         // Bind profiler display route.
         $route->get(
             'anbu/{storage?}/{module?}',
@@ -102,7 +90,7 @@ class ProfilerServiceProvider extends ServiceProvider
         $view = $this->app->make('view');
 
         // Register anbu directory as view namespace.
-        $view->addNamespace('anbu', __DIR__);
+        $view->addNamespace('anbu', __DIR__.'/views/');
     }
 
     /**

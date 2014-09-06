@@ -44,8 +44,21 @@ class DatabaseRepository implements Repository
      */
     public function all()
     {
+        // Get items from database.
+        $items = Storage::orderBy('id', 'desc')->get();
+
+        // Record buffer.
+        $records = [];
+
+        // Iterate collection.
+        foreach ($items as $item) {
+
+            // Add record to array.
+            $records[] = $item;
+        }
+
         // Return a list of storage objects.
-        return Storage::orderBy('id', 'desc')->get();
+        return $records;
     }
 
     /**

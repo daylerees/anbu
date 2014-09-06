@@ -17,7 +17,7 @@
 </table>
 
 <h1>Routing Table</h1>
-@if (count($routes))
+@if (isset($routes) && count($routes))
 <table class="anbu-table">
     <thead>
         <tr>

@@ -1,0 +1,472 @@
+/******************************************
+ * IMPORTS                                *
+ ******************************************/
+
+@import "lib/elements/elements.less";
+@import "lib/font-awesome/font-awesome.less";
+
+/******************************************
+ * VARIABLES                              *
+ ******************************************/
+
+@orange:        #f4726d;
+@lightOrange:   #f28476;
+@darkOrange:    #dc5954;
+
+/******************************************
+ * FONTS                                  *
+ ******************************************/
+
+// Lato Regular.
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(fonts/lato.ttf) format('truetype');
+}
+
+// Lato Bold.
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url(fonts/lato-bold.ttf) format('truetype');
+}
+
+// Lato Italic.
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Lato Italic'), local('Lato-Italic'), url(fonts/lato-italic.ttf) format('truetype');
+}
+
+/******************************************
+ * GENERIC STYLES                         *
+ ******************************************/
+
+// Body
+body {
+    font-family:'Lato', sans-serif;
+    color:#666;
+}
+
+/******************************************
+ * HEADER                                 *
+ ******************************************/
+
+// Header bar.
+header {
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    height:50px;
+    background-color:rgba(230,230,230, 0.8);
+    z-index:9999;
+}
+
+// Laravel logo.
+.logo {
+    position:absolute;
+    top:9px;
+    left:15px;
+    width:32px;
+    height:32px;
+}
+
+// Laravel version.
+.version {
+    position:absolute;
+    right:10px;
+    top:11px;
+    display:inline-block;
+    text-transform:uppercase;
+    font-size:0.8em;
+    background-color:white;
+    border-radius:3px;
+    padding:.5em 1em;
+    color:#777;
+}
+
+// Request URI.
+.request {
+    position:absolute;
+    right:135px;
+    top:18px;
+    display:inline-block;
+    text-transform:uppercase;
+    font-size:0.8em;
+    border-radius:3px;
+}
+
+// Request time.
+.request-time {
+    background-color:white;
+    padding:0.5em 1em;
+    border-radius:3px 0 0 3px;
+    color:#777;
+}
+
+// Reset button.
+.request-reset {
+    background-color:@orange;
+    padding:0.5em 0.8em;
+    color:white;
+    border-radius:0 3px 3px 0;
+}
+
+/******************************************
+ * NAVIGATION                             *
+ ******************************************/
+
+// Navigation.
+nav {
+    position:fixed;
+    top:50px;
+    bottom:0;
+    left:0;
+    width:60px;
+    background-color:@orange;
+
+    // Nav menu.
+    ul {
+        list-style-type:none;
+        margin:0.5em 0 0 0;
+        padding:0;
+
+        // Nav tabs.
+        a {
+            position:relative;
+            text-decoration:none;
+            color:#ffbebb;
+            display:block;
+            width:60px;
+            height:40px;
+            font-size:1.2em;
+            text-shadow:0 1px 1px #e85a5a;
+            .transition(.2s, linear);
+
+            // Nav tab header.
+            &:hover {
+                color:white;
+                background-color:lighten(@orange, 10%);
+            }
+
+            // Active tab.
+            &.active {
+                color:white;
+                background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAnCAYAAADtu3N3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkI5QjQ2OTdEMjU3NDExRTRCMzE4QjRBRDkzNTg5MkI4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkI5QjQ2OTdFMjU3NDExRTRCMzE4QjRBRDkzNTg5MkI4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QjlCNDY5N0IyNTc0MTFFNEIzMThCNEFEOTM1ODkyQjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QjlCNDY5N0MyNTc0MTFFNEIzMThCNEFEOTM1ODkyQjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7i5QLiAAAA5UlEQVR42qzWwQqBQRTF8TEfxdN8yUaykrKhLGTBS3keJZKysLBTkp2UjVhTx7k1U1/KQnNu/be/puZOTQmAE03mVRCbOztZYhlbQAlBCUEJQQlBCUEJQQlBCUEJQQlBCdn4n4/Wuc6/r92roG8sCSpiyVDEvAKK2EwBRewSSp+wVzlbI3GKizpkDxVmW98LJ3ylYrE2O6uwGpuwgwIrXspWhVlj9lRhVost2VuBWV12VWF2KSO2U2CxBtursHJYm5sCi9XZSoVZA3ZXYRXWZ5u4NoqfY5MdVViVTdmpJPxt5x8BBgDrgG6UO0LmngAAAABJRU5ErkJggg==);
+                background-repeat:no-repeat;
+                background-size: 10px 20px;
+                background-position:50px 10px;
+                background-color:@darkOrange;
+            }
+
+            // Icon.
+            i {
+                position:absolute;
+                top:10px;
+                left:20px;
+            }
+        }
+    }
+}
+
+// Menu item badge.
+.badge {
+    position:absolute;
+    top:3px;
+    left:32px;
+    width:15px;
+    height:15px;
+    background-color:white;
+    .rounded(999px);
+    .box-shadow(0 1px 1px #d73924);
+
+    // Badge count.
+    .badge-inner {
+        position:absolute;
+        top:2px;
+        left:5px;
+        color:#931f10;
+        font-size:0.5em;
+        font-weight:bold;
+        text-shadow:none;
+    }
+}
+
+
+/******************************************
+ * Content Area                           *
+ ******************************************/
+
+// Static container.
+.container {
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:60px;
+    overflow:auto;
+}
+
+// Content element.
+.content {
+    margin:2em;
+    padding-top:25px;
+
+    // Monospace content.
+    .code {
+        font-family:Monaco, monospace;
+        font-size:0.8em;
+    }
+
+    // Debug wrapper.
+    .debug {
+        padding:0.5em 1.5em;
+        margin-bottom:2em;
+        background-color:#fcfcfc;
+        .box-shadow(0 2px 1px rgba(0,0,0,0.1));
+    }
+
+    // Table.
+    table {
+        width:100%;
+        font-size:0.9em;
+
+        // Table header.
+        th {
+            text-align:left;
+            border-bottom:1px solid @orange;
+        }
+
+        // Table Cells.
+        th,
+        td {
+            padding:0.5em 1em;
+        }
+
+        // Zebra striping.
+        tr:nth-child(even) {
+            background-color:#fbfbfb;
+        }
+    }
+
+    // Links.
+    a {
+        color:@orange;
+
+        // Link hovers.
+        &:hover {
+            color:#ffbebb;
+        }
+    }
+
+    // Route parameters.
+    .parameter {
+        color:@orange;
+    }
+
+    // Empty collection.
+    .empty {
+        padding:1em;
+        background-color:#f9f9f9;
+        color:#bbb;
+        text-shadow:0 1px 0 white;
+    }
+
+    // Paginator.
+    .pagination {
+        list-style-type: none;
+        padding:0;
+        margin:2em 0 0 0;
+    }
+
+    // Pagination element.
+    .pagination li {
+        float:left;
+        margin-right:0.4em;
+    }
+
+    // Pagination link.
+    .pagination a,
+    .pagination span {
+        background-color:#eee;
+        color:#555;
+        padding:0.2em 0.5em;
+        text-decoration:none;
+        font-size:0.9em;
+    }
+
+    // Active pagination link.
+    .pagination li.active span {
+        background-color:@orange;
+        color:white;
+    }
+
+    // Disabled paginator links.
+    .pagination li.disabled {
+        display:none;
+    }
+}
+
+/******************************************
+ * LOGGER                                 *
+ ******************************************/
+
+// Tag
+.log-tag {
+    display:inline-block;
+    padding:0.5em 1em;
+    width:60px;
+    background-color:#eee;
+    color:white;
+    font-weight:bold;
+    font-size:0.6em;
+    text-align:center;
+    .rounded(5px);
+}
+
+// Error tag.
+.log-tag-error {
+    background-color:#e53c5c;
+}
+
+// Info tag.
+.log-tag-info {
+    background-color:#9ed646;
+}
+
+// First column.
+.log-col-0 {
+    width:80px;
+}
+
+/******************************************
+ * ROUTES                                 *
+ ******************************************/
+
+// Request method.
+.method-tag {
+    background-color:#666;
+    font-weight:bold;
+    color:white;
+    display:inline-block;
+    padding:0.5em 1em;
+    font-size:0.6em;
+    text-align:center;
+    border-radius:5px;
+}
+
+// GET method.
+.method-tag-get {
+    background-color: #9ed646;
+}
+
+// DELETE method.
+.method-tag-delete {
+    background-color: #e53c5c;
+}
+
+// POST method.
+.method-tag-post {
+    background-color: #e5c73c;
+}
+
+// PUT/PATCH method.
+.method-tag-put,
+.method-tag-patch {
+    background-color: #3a99fa;
+}
+
+/******************************************
+ * HISTORY                                *
+ ******************************************/
+
+// Human friendly time.
+.friendly-time {
+    color:#aaa;
+    margin-left:1em;
+}
+
+// Latest request button.
+a.latest-request {
+    background-color:@orange;
+    color:white;
+    display:inline-block;
+    text-decoration:none;
+    padding:0.5em 1em;
+    border-radius:5px;
+
+    // Button hover.
+    &:hover {
+        background-color:#ffbebb;
+        color:#fff;
+    }
+}
+
+/******************************************
+ * DASHBOARD                              *
+ ******************************************/
+
+// Widget container.
+.widgets {
+    overflow:hidden;
+}
+
+// Widget.
+.widget {
+    position:relative;
+    width:200px;
+    height:140px;
+    float:left;
+    background-color:#f4f4f4;
+    overflow:hidden;
+    margin:0 1.5em 1.5em 0;
+    padding:1em;
+    -webkit-box-shadow:0 2px 1px rgba(0,0,0,0.1);
+    border-radius:4px;
+
+    // Widget header.
+    h1 {
+        font-size:1em;
+        margin:0 0 0.5em 0;
+        line-height:1em;
+    }
+}
+
+// Widget badge wrapper.
+.widget-badge {
+    display:block;
+    font-weight:bold;
+    color:white;
+    width:30px;
+    height:30px;
+    background-color:@orange;
+    border-radius:999px;
+    position:absolute;
+    right:10px;
+    top:10px;
+}
+
+// Widget badge count.
+.widget-badge-count {
+    position:relative;
+    left:10px;
+    top:5px;
+}
+
+/******************************************
+ * QUERIES                                *
+ ******************************************/
+
+// Keyword highlight.
+.sql-keyword {
+    color:blue;
+}
+
+// Value highlight.
+.sql-value {
+    color:red;
+}
