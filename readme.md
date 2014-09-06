@@ -7,6 +7,8 @@
 
 # Anbu Profiler for Laravel PHP
 
+![Anbu Profiler](https://raw.githubusercontent.com/daylerees/anbu/master/screenshot.png)
+
 ## Notice
 
 This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works just fine, but don't file issues or PRs yet!
