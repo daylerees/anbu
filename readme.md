@@ -4,51 +4,42 @@
 ![Packagist License](http://img.shields.io/packagist/l/daylerees/anbu.svg?style=flat-square)
 ![Packagist Downloads](http://img.shields.io/packagist/dt/daylerees/anbu.svg?style=flat-square)
 ![Github Issues](http://img.shields.io/github/issues/daylerees/anbu.svg?style=flat-square)
-# Notice
 
-This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works, but don't file issues or PRs yet!
+# Anbu Profiler for Laravel PHP
 
-# Installation
+## Notice
 
-Simply add the following service provider to `app/config/app.php`:
+This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works just fine, but don't file issues or PRs yet!
 
-    'providers' => array(
+## Installation
 
-        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-        'Illuminate\Auth\AuthServiceProvider',
-        'Illuminate\Cache\CacheServiceProvider',
-        ... more ...
+First ensure that you have a database, and that it is configured with Laravel.
 
-        'Anbu\ProfilerServiceProvider',
+Next add the following service provider to `app/config/app.php`:
 
-    ),
+    'Anbu\ProfilerServiceProvider',
 
-Now simply ensure that you've setup a database connection, visit any page of your site, and then:
+Next use the `asset:publish` command for Artisan to publish profiler asset files.
 
-    YOUR_APP_HOST_HERE/anbu
+    php artisan asset:install
 
-or just click the Laravel icon in the lower left of any request.
+Finally, execute a page of your application and click on the Laravel icon in the lower left.
 
-If you want to use Anbu timers, you'll need to include the Facade in the same config file:
+## Timers
 
-    'aliases' => array(
+If you want to use Anbu timers, you'll need to include the Facade in the `app/config/app.php` file:
 
-        'App'             => 'Illuminate\Support\Facades\App',
-        'Artisan'         => 'Illuminate\Support\Facades\Artisan',
-        'Auth'            => 'Illuminate\Support\Facades\Auth',
-        'Blade'           => 'Illuminate\Support\Facades\Blade',
-        'Cache'           => 'Illuminate\Support\Facades\Cache',
-        ... more ...
-
-        'Anbu'            => 'Anbu\Facades\Anbu',
-    ),
+    'Anbu' => 'Anbu\Facades\Anbu',
 
 Now you can create timers like this:
 
     Anbu::timers()->start('test');
-    sleep(30); // Do something interesting.
+    sleep(30); // Do something interesting here.
     Anbu::timers()->end('test', 'Completed doing something.');
 
-Better docs soon! As I said... WIP.
+## Debug
 
-Enjoy!
+When you use `dd()` you risk exposing information to the users of your application. Instead, use `ad()` to dump this data into the 'Debug' section of Anbu.
+
+    ad('foo');
+
