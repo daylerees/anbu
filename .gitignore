@@ -1,3 +1,6 @@
 .DS_Store
 vendor
 composer.lock
+node_modules
+.idea
+composer.phar

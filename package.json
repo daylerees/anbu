@@ -1,0 +1,33 @@
+{
+  "name": "Anbu",
+  "version": "0.0.0",
+  "description": "The Anbu profiler for Laravel PHP.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daylerees/anbu.git"
+  },
+  "keywords": [
+    "anbu",
+    "profiler",
+    "php",
+    "laravel"
+  ],
+  "author": "Dayle Rees",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daylerees/anbu/issues"
+  },
+  "homepage": "https://github.com/daylerees/anbu",
+  "dependencies": {
+    "del": "^0.1.2",
+    "gulp": "^3.8.7",
+    "gulp-less": "^1.3.5"
+  }
+}

@@ -1,0 +1,24 @@
+<project name="daylerees/anbu" default="build">
+
+    <!-- Refresh destination directories. -->
+    <target name="clean">
+        <delete dir="${basedir}/vendor"/>
+        <delete dir="${basedir}/node_modules"/>
+    </target>
+
+    <target name="composer">
+        <get src="https://getcomposer.org/composer.phar" dest="${basedir}/composer.phar" />
+        <exec dir="${basedir}" executable="php" failonerror="true">
+            <arg line="composer.phar update --ansi"></arg>
+        </exec>
+    </target>
+
+    <target name="npm">
+        <exec dir="${basedir}" executable="npm" failonerror="true">
+            <arg line="install --ansi"></arg>
+        </exec>
+    </target>
+
+    <!-- Execute the build process. -->
+    <target name="build" depends="clean,composer,npm"/>
+</project>

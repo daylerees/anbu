@@ -58,7 +58,10 @@ class ProfilerController extends BaseController
         // Nest the child view.
         array_set($data, 'child', $this->renderModule($module));
 
-        // Nest current module
+        // Nest current storage.
+        array_set($data, 'storage', $record);
+
+        // Nest current module.
         array_set($data, 'current', $module);
 
         // Return view data array.

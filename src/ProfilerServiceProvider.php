@@ -72,6 +72,12 @@ class ProfilerServiceProvider extends ServiceProvider
         // Get the router.
         $route = $this->app->make('router');
 
+        // Bind core asset controller route.
+        $route->get(
+            'anbu/asset/core/{path}',
+            'Anbu\\Controllers\\AssetController@core'
+        );
+
         // Bind asset controller route.
         $route->get(
             'anbu/asset/{module}/{path}',
