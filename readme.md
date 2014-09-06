@@ -21,7 +21,7 @@ Next add the following service provider to `app/config/app.php`:
 
 Next use the `asset:publish` command for Artisan to publish profiler asset files.
 
-    php artisan asset:install
+    php artisan asset:publish
 
 Finally, execute a page of your application and click on the Laravel icon in the lower left.
 
