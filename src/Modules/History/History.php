@@ -82,6 +82,9 @@ class History extends Module
 
         // Create paginator.
         $this->data['history'] = $paginator->make($history, count($history), 10);
+
+        // Set badge to count of storage records.
+        $this->badge = count($this->data['history']);
     }
 
     /**

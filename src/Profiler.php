@@ -55,6 +55,7 @@ class Profiler
         'Anbu\Modules\QueryLogger\QueryLogger',
         'Anbu\Modules\Logger\Logger',
         'Anbu\Modules\Events\Events',
+        'Anbu\Modules\Container\Container',
         'Anbu\Modules\Debug\Debug',
         'Anbu\Modules\Timers\Timers',
         'Anbu\Modules\Info\Info',

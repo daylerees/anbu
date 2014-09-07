@@ -28,7 +28,8 @@
                     <i class="fa fa-{{ array_get($item, 'icon') }}"></i>
                     @if (array_get($item, 'badge') > 0)
                     <span class="badge">
-                        <span class="badge-inner">{{ array_get($item, 'badge') }}</span>
+                        <?php $badge = array_get($item, 'badge'); ?>
+                        <span class="badge-inner">{{ $badge > 9 ? '+' : $badge  }}</span>
                     </span>
                     @endif
                 </a></li>
