@@ -2,7 +2,7 @@
 
 <h2>Latest Request</h2>
 
-<a href="{{ url('/anbu') }}" class="latest-request">View Latest Request</a>
+<a href="{{ url('/anbu') }}" class="latest-request"><i class="fa fa-reply"></i>&nbsp;&nbsp; View Latest Request</a>
 
 <h2>Request History</h2>
 @if (isset($history) && count($history))
@@ -30,6 +30,7 @@
     </tbody>
 </table>
 {{ $history->links() }}
+<br /> <br />
 @else
 <div class="empty">No previous requests are present.</div>
 @endif

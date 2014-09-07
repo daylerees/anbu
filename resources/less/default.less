@@ -155,8 +155,6 @@ nav {
     left:0;
     width:60px;
     background-color:@orange;
-    .animated;
-    .fadeInLeft;
 
     // Nav menu.
     ul {
@@ -216,7 +214,7 @@ nav {
             // Tooltip.
             .label {
                 position:absolute;
-                left:55px;
+                left:70px;
                 top:6px;
                 color:white;
                 text-shadow:none;
@@ -327,6 +325,7 @@ nav {
     // Table.
     table {
         width:100%;
+        overflow:hidden;
         font-size:0.9em;
 
         // Table header.
@@ -364,10 +363,17 @@ nav {
 
     // Empty collection.
     .empty {
-        padding:1em;
+        padding:0.8em;
+        font-style:italic;
+        border:1px solid #eee;
         background-color:#f9f9f9;
         color:#bbb;
         text-shadow:0 1px 0 white;
+
+        // Icon.
+        i {
+            margin-right:1em;
+        }
     }
 
     // Paginator.

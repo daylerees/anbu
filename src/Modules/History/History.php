@@ -81,7 +81,7 @@ class History extends Module
         $paginator = $this->app->make('paginator');
 
         // Create paginator.
-        $this->data['history'] = $paginator->make($history, count($history), 5);
+        $this->data['history'] = $paginator->make($history, count($history), 10);
     }
 
     /**

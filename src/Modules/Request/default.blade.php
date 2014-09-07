@@ -18,7 +18,7 @@
     </tbody>
 </table>
 @else
-<div class="empty">No data has been provided with this request.</div>
+<div class="empty"><i class="fa fa-exclamation-triangle"></i>No data has been provided with this request.</div>
 @endif
 
 <h2>Request Headers</h2>
