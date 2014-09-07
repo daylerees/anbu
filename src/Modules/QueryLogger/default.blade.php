@@ -1,4 +1,4 @@
-<h1>Database Queries</h1>
+<h1>Queries</h1>
 @if (isset($queries) && count($queries))
 <table class="anbu-table">
     <thead>

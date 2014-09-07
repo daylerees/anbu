@@ -9,7 +9,7 @@
     <header>
         <img src="{{ url('packages/daylerees/anbu/img/profiler_logo.png') }}" alt="Laravel" class="logo">
         <?php $date = new Carbon\Carbon($storage->created_at); ?>
-        <span class="request"><span class="request-time">{{ $uri }} - {{ $date->format('d/m/y H:i:s') }}</span><a href="{{ url('/anbu') }}" class="request-reset" title="Back to latest."><i class="fa fa-reply"></i></a></span>
+        <span class="request"><span class="request-time"><span class="uri">{{ $uri }}</span> - {{ $date->format('d/m/y H:i:s') }} - <span class="duration">{{ number_format($storage->time, 3) }}ms</span></span><a href="{{ url('/anbu') }}" class="request-reset" title="Back to latest."><i class="fa fa-reply"></i></a></span>
         <span class="version">Laravel {{ $version }}</span>
     </header>
     <nav>
@@ -17,9 +17,13 @@
             @foreach($menu as $item)
             <li>
             @if(array_get($item, 'title') == $current->getName())
-                <a href="{{ array_get($item, 'url') }}" title="{{ array_get($item, 'title') }}" class="active">
+                <a href="{{ array_get($item, 'url') }}" class="active">
             @else
-                <a href="{{ array_get($item, 'url') }}" title="{{ array_get($item, 'title') }}">
+                <a href="{{ array_get($item, 'url') }}">
+                <span class="label">
+                    {{ array_get($item, 'title') }}
+                    <div class="arrow"></div>
+                </span>
             @endif
                     <i class="fa fa-{{ array_get($item, 'icon') }}"></i>
                     @if (array_get($item, 'badge') > 0)

@@ -214,6 +214,9 @@ class Profiler
         // Store the current URI.
         $storage->uri = $this->getCurrentRequestUri();
 
+        // Set the request time.
+        $storage->time = microtime(true) - LARAVEL_START;
+
         // Fetch module storage array and set on record.
         $storage->storage = gzencode(serialize($this->fetchStorage()), 9);
 

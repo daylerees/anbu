@@ -112,6 +112,7 @@ class ProfilerServiceProvider extends ServiceProvider
                 // Define fields.
                 $table->increments('id');
                 $table->string('uri')->nullable();
+                $table->float('time')->nullable();
                 $table->binary('storage');
                 $table->timestamps();
             });

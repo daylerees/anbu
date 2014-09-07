@@ -1,4 +1,5 @@
-<h1>Request Data</h1>
+<h1>Request Information</h1>
+<h2>Request Data</h2>
 @if (isset($request) && count($request))
 <table class="anbu-table">
     <thead>
@@ -20,7 +21,7 @@
 <div class="empty">No data has been provided with this request.</div>
 @endif
 
-<h1>Request Headers</h1>
+<h2>Request Headers</h2>
 @if (isset($requestHeaders) && count($requestHeaders))
 <table class="anbu-table">
     <thead>
@@ -42,7 +43,7 @@
 <div class="empty">No headers are attached to this request.</div>
 @endif
 
-<h1>Response Headers</h1>
+<h2>Response Headers</h2>
 @if (isset($responseHeaders) && count($responseHeaders))
 <table class="anbu-table">
     <thead>
@@ -64,7 +65,7 @@
 <div class="empty">No headers are attached to this request.</div>
 @endif
 
-<h1>Server Variables</h1>
+<h2>Server Variables</h2>
 @if (isset($server) && count($server))
 <table class="anbu-table">
     <thead>

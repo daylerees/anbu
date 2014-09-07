@@ -3,6 +3,7 @@
  ******************************************/
 
 @import "lib/elements/elements.less";
+@import "lib/animate/animate.less";
 @import "lib/font-awesome/font-awesome.less";
 
 /******************************************
@@ -87,6 +88,8 @@ header {
     border-radius:3px;
     padding:.5em 1em;
     color:#777;
+    .animated;
+    .fadeIn;
 }
 
 // Request URI.
@@ -98,6 +101,8 @@ header {
     text-transform:uppercase;
     font-size:0.8em;
     border-radius:3px;
+    .animated;
+    .fadeIn;
 }
 
 // Request time.
@@ -105,7 +110,8 @@ header {
     background-color:white;
     padding:0.5em 1em;
     border-radius:3px 0 0 3px;
-    color:#777;
+    background-color:#777;
+    color:white;
 }
 
 // Reset button.
@@ -114,6 +120,27 @@ header {
     padding:0.5em 0.8em;
     color:white;
     border-radius:0 3px 3px 0;
+
+    // Button hover.
+    &:hover {
+        background-color:darken(@orange, 5%);
+
+        // Animate icon.
+        i {
+            .animated;
+            .swing;
+        }
+    }
+}
+
+// Current URI.
+.uri {
+    color:@lightOrange;
+}
+
+// Request duration.
+.duration {
+    color:#bbb;
 }
 
 /******************************************
@@ -128,6 +155,8 @@ nav {
     left:0;
     width:60px;
     background-color:@orange;
+    .animated;
+    .fadeInLeft;
 
     // Nav menu.
     ul {
@@ -151,6 +180,20 @@ nav {
             &:hover {
                 color:white;
                 background-color:lighten(@orange, 10%);
+
+                // Animate icon.
+                i {
+                    .animated;
+                    .bounceIn;
+                }
+
+                // Label hovers.
+                .label {
+                    position:relative;
+                    opacity:1;
+                    .animated;
+                    .bounceInLeft;
+                }
             }
 
             // Active tab.
@@ -169,6 +212,42 @@ nav {
                 top:10px;
                 left:20px;
             }
+
+            // Tooltip.
+            .label {
+                position:absolute;
+                left:55px;
+                top:6px;
+                color:white;
+                text-shadow:none;
+                font-size:0.6em;
+                background-color:darken(@darkOrange, 5%);
+                padding:0.5em;
+                z-index:9999 !important;
+                .rounded(3px);
+                opacity:0;
+
+                // Arrow for tooltip.
+                .arrow {
+                    position:absolute;
+                    left:-5px;
+                    top:8px;
+                    width: 0;
+                    height: 0;
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    border-right:5px solid darken(@darkOrange, 5%);
+                }
+            }
+        }
+    }
+
+    // Hide badge on hover.
+    &:hover {
+
+        // Nav badge.
+        .badge {
+            opacity:0;
         }
     }
 }
@@ -183,6 +262,7 @@ nav {
     background-color:white;
     .rounded(999px);
     .box-shadow(0 1px 1px #d73924);
+    .transition(.2s, linear);
 
     // Badge count.
     .badge-inner {
@@ -203,6 +283,7 @@ nav {
 
 // Static container.
 .container {
+    z-index:0;
     position:fixed;
     top:0;
     right:0;
@@ -213,8 +294,21 @@ nav {
 
 // Content element.
 .content {
+    z-index:0;
     margin:2em;
     padding-top:25px;
+
+    // Headers.
+    &>h1 {
+        border-bottom:1px solid #ccc;
+        padding-bottom:0.2em;
+    }
+
+    // Second level headers.
+    &>h2 {
+        border-bottom:1px solid #eee;
+        padding-bottom:0.2em;
+    }
 
     // Monospace content.
     .code {
