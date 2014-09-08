@@ -55,7 +55,7 @@ class Profiler
         'Anbu\Modules\QueryLogger\QueryLogger',
         'Anbu\Modules\Logger\Logger',
         'Anbu\Modules\Events\Events',
-        'Anbu\Modules\Container\Container',
+        /* 'Anbu\Modules\Container\Container', */
         'Anbu\Modules\Debug\Debug',
         'Anbu\Modules\Timers\Timers',
         'Anbu\Modules\Info\Info',
@@ -221,7 +221,7 @@ class Profiler
         $storage->time = microtime(true) - LARAVEL_START;
 
         // Fetch module storage array and set on record.
-        $storage->storage = gzencode(serialize($this->fetchStorage()), 9);
+        $storage->storage = base64_encode(serialize($this->fetchStorage()));
 
         // Use the repository to save the storage.
         $this->repository->put($storage);
