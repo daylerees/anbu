@@ -113,7 +113,7 @@ class ProfilerServiceProvider extends ServiceProvider
                 $table->increments('id');
                 $table->string('uri')->nullable();
                 $table->float('time')->nullable();
-                $table->binary('storage');
+                $table->longText('storage');
                 $table->timestamps();
             });
         }

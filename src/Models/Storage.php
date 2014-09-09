@@ -21,6 +21,6 @@ class Storage extends Model
     public function getData()
     {
         // Get the unserialized storage.
-        return unserialize(base64_decode(stream_get_contents($this->storage)));
+        return unserialize(base64_decode($this->storage));
     }
 }
