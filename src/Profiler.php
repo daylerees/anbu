@@ -37,11 +37,18 @@ class Profiler
     protected $modules = [];
 
     /**
-     * Is the profiler enabled?
+     * Enable profiling?
      *
      * @var boolean
      */
     protected $enabled = true;
+
+    /**
+     * Render the profiler link?
+     *
+     * @var boolean
+     */
+    protected $display = true;
 
     /**
      * Default modules to load.
@@ -55,7 +62,7 @@ class Profiler
         'Anbu\Modules\QueryLogger\QueryLogger',
         'Anbu\Modules\Logger\Logger',
         'Anbu\Modules\Events\Events',
-        /* 'Anbu\Modules\Container\Container', */
+        /*'Anbu\Modules\Container\Container',*/
         'Anbu\Modules\Debug\Debug',
         'Anbu\Modules\Timers\Timers',
         'Anbu\Modules\Info\Info',
@@ -181,7 +188,7 @@ class Profiler
     public function executeAfterHook($request, $response)
     {
         // If the profiler is disabled...
-        if (!$this->isEnabled()) {
+        if (!$this->enabled) {
 
             // Exit, we don't want to log requests to the profiler.
             return;
@@ -197,10 +204,13 @@ class Profiler
         $type = $response->headers->get('Content-Type');
 
         // Check for JSON in the header.
-        if (!strstr($type, 'json')) {
+        if (strstr($type, 'text/html') && $this->display) {
+
+            // Get the view component.
+            $view = $this->app->make('view');
 
             // Append button to response.
-            echo $this->app->make('view')->make('anbu::button', compact('storage'));
+            echo $view->make('anbu::button', compact('storage'));
         }
     }
 
@@ -288,26 +298,6 @@ class Profiler
     }
 
     /**
-     * Determine whether the profiler is enabled.
-     *
-     * @return boolean
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Enable the profiler for this request.
-     *
-     * @return void
-     */
-    public function enable()
-    {
-        $this->enabled = true;
-    }
-
-    /**
      * Dsiable the profiler for this request.
      *
      * @return void
@@ -315,6 +305,16 @@ class Profiler
     public function disable()
     {
         $this->enabled = false;
+    }
+
+    /**
+     * Disable showing the profiler link on current request.
+     *
+     * @return void
+     */
+    public function hide()
+    {
+        $this->display = false;
     }
 
     /**

@@ -72,10 +72,17 @@ class ProfilerServiceProvider extends ServiceProvider
         // Get the router.
         $route = $this->app->make('router');
 
+        // Register filters.
+        $route->filter('anbu.hide', 'Anbu\\Filters\\ProfilerFilter@hide');
+        $route->filter('anbu.disable', 'Anbu\\Filters\\ProfilerFilter@disable');
+
         // Bind profiler display route.
         $route->get(
             'anbu/{storage?}/{module?}',
-            'Anbu\\Controllers\\ProfilerController@index'
+            [
+                'before'    => 'anbu.disable',
+                'uses'      => 'Anbu\\Controllers\\ProfilerController@index'
+            ]
         );
     }
 

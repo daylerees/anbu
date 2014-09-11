@@ -15,6 +15,10 @@ This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works just f
 
 ## Installation
 
+You'll need to add the package to the `require` section of your Laravel app `composer.json` file:
+
+    "daylerees/anbu": "dev-master"
+
 First ensure that you have a database, and that it is configured with Laravel.
 
 Next add the following service provider to `app/config/app.php`:
@@ -45,3 +49,23 @@ When you use `dd()` you risk exposing information to the users of your applicati
 
     ad('foo');
 
+
+## Hide & Disable
+
+First let me explain the two concepts.
+
+To **hide** is to eliminate the Laravel icon button from requests, so that it won't interfere with certain content types.
+
+To **disable** is to stop the profiler from storing the request, and displaying the button. Data for this request will be lost.
+
+You can **hide** the profiler using:
+
+    Anbu::hide();
+
+Or you can apply the `anbu.hide` filter as a `before` filter to any route or route group.
+
+You can **disable** the profiler using:
+
+    Anbu::disable();
+
+Or you can apply the `anbu.disable` filter as a `before` filter to any route or route group.

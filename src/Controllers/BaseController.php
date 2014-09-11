@@ -42,9 +42,6 @@ abstract class BaseController extends Controller
         Repository      $repository,
         ModuleHydrator  $hydrator
     ) {
-        // Don't track our own requests.
-        $profiler->disable();
-
         // Set injected properties.
         $this->profiler     = $profiler;
         $this->repository   = $repository;
