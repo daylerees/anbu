@@ -4,6 +4,7 @@
 ![Packagist License](http://img.shields.io/packagist/l/daylerees/anbu.svg?style=flat-square)
 ![Packagist Downloads](http://img.shields.io/packagist/dt/daylerees/anbu.svg?style=flat-square)
 ![Github Issues](http://img.shields.io/github/issues/daylerees/anbu.svg?style=flat-square)
+[![Tips](http://img.shields.io/gratipay/daylerees.svg?style=flat-square)](https://gratipay.com/daylerees)
 
 # Anbu Profiler for Laravel PHP
 
