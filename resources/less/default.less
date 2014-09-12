@@ -326,6 +326,7 @@ nav {
     // Table.
     table {
         width:100%;
+        table-layout: fixed;
         overflow:hidden;
         font-size:0.9em;
 
@@ -419,6 +420,28 @@ nav {
     // Red text.
     .red {
         color:#e53c5c;
+    }
+
+    // Wrap long text.
+    .v {
+        word-wrap: break-word;
+        word-break:break-all;
+
+    }
+
+    // PHP info tab styles.
+    .phpinfo {
+
+        // Hide linked images.
+        a {
+            display:none;
+        }
+
+        // Hide the first table.
+        table:first-child {
+            display:none;
+        }
+
     }
 }
 
@@ -529,8 +552,8 @@ a.latest-request {
 // Widget.
 .widget {
     position:relative;
-    width:200px;
-    height:140px;
+    width:450px;
+    height:240px;
     float:left;
     background-color:#f4f4f4;
     overflow:hidden;

@@ -56,6 +56,15 @@ class Info extends Module
         // We only want the body.
         $info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
 
+        // Extract PHP version.
+        preg_match('/\<h1 class=\"p\"\>PHP Version ([\d.]+)\<\/h1\>/', $info, $matches);
+
+        // Replace the second title.
+        $info = preg_replace('/\<h1 class=\"p\"\>PHP Version ([\d.]+)\<\/h1\>/', null, $info);
+
+        // Set version into data array.
+        $this->data['version'] = array_get($matches, '1');
+
         // Store in data array.
         $this->data['info'] =  $info;
     }

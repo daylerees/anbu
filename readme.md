@@ -69,3 +69,17 @@ You can **disable** the profiler using:
     Anbu::disable();
 
 Or you can apply the `anbu.disable` filter as a `before` filter to any route or route group.
+
+## Problems?
+
+If a new module is added, then you might get an error when rendering a previous request.
+
+Here's some things you can try if you have any problems. First you can try updating Anbu with:
+
+    composer update
+
+Secondly you can clear the previous requests with the following Artisan command.
+
+    php artisan anbu:clear
+
+Let me know about other issues!
