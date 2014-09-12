@@ -1,6 +1,6 @@
 [ ![Codeship Status for daylerees/anbu](https://www.codeship.io/projects/1657b700-1681-0132-af64-5ae52864a4c1/status?branch=master)](https://www.codeship.io/projects/33889)
 
-![Packagist Version](http://img.shields.io/packagist/v/daylerees/anbu.svg?style=flat-square)
+![Github Release](http://img.shields.io/github/release/daylerees/anbu.svg?style=flat-square)
 ![Packagist License](http://img.shields.io/packagist/l/daylerees/anbu.svg?style=flat-square)
 ![Packagist Downloads](http://img.shields.io/packagist/dt/daylerees/anbu.svg?style=flat-square)
 ![Github Issues](http://img.shields.io/github/issues/daylerees/anbu.svg?style=flat-square)
