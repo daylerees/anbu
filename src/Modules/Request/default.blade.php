@@ -12,7 +12,7 @@
         @foreach($request as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td>{{ str_limit($value) }}</td>
+            <td>{{ anbu_str_limit($value) }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -34,7 +34,7 @@
         @foreach($requestHeaders as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ str_limit($value[0]) }}</td>
+            <td class="code">{{ anbu_str_limit($value[0]) }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -56,7 +56,7 @@
         @foreach($responseHeaders as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ str_limit($value[0]) }}</td>
+            <td class="code">{{ anbu_str_limit($value[0]) }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -78,7 +78,7 @@
         @foreach($server as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ str_limit($value) }}</td>
+            <td class="code">{{ anbu_str_limit($value) }}</td>
         </tr>
         @endforeach
     </tbody>
