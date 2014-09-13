@@ -19,13 +19,20 @@ if ( ! function_exists('anbu_str_limit'))
         // when value not is null or empty
         if ( ! is_null($value) && $value !== '')
         {
-            if (is_string($value))
+            $data = $value;
+
+            // to json (object or array)
+            if (is_array($value) || is_object($value))
             {
-                return str_limit($value);
+                $data = json_encode($value);
+            }
+            // to string (int, float, etc)
+            elseif ( ! is_string($value))
+            {
+                $data = (string) $value;
             }
 
-            // when is a object or array
-            return json_encode($value);
+            return str_limit($data);
         }
 
         // when no data in value
