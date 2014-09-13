@@ -10,10 +10,6 @@
 
 ![Anbu Profiler](https://raw.githubusercontent.com/daylerees/anbu/master/screenshot.png)
 
-## Notice
-
-This profiler is still **WORK IN PROGRESS**. Don't get me wrong, it works just fine, but don't file issues or PRs yet!
-
 ## Installation
 
 You'll need to add the package to the `require` section of your Laravel app `composer.json` file:
