@@ -14,7 +14,7 @@
 
 You'll need to add the package to the `require` section of your Laravel app `composer.json` file:
 
-    "daylerees/anbu": "dev-master"
+    "daylerees/anbu": "1.0.0-alpha1"
 
 First ensure that you have a database, and that it is configured with Laravel.
 
