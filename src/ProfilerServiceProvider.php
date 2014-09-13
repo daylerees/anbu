@@ -18,14 +18,27 @@ class ProfilerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Get the configuration component.
+        $config = $this->app->make('config');
+
+        // Get debug setting as default enabled option.
+        $default = $config->get('app.debug', false);
+
+        // Get anbu enabled setting but provide default.
+        $enabled = $config->get('anbu.enabled', $default);
+
+        // If the profiler is disabled.
+        if (!$enabled) {
+
+            // Nothing to do here!
+            return;
+        }
+
         // Register clear command.
         $this->commands('Anbu\\Commands\\ClearCommand');
 
         // Ensure that required database table exists.
         $this->installTable();
-
-        // Get the configuration component.
-        $config = $this->app->make('config');
 
         // Get the repository class.
         $repo = $config->get('anbu.repository', self::DEFAULT_REPO);

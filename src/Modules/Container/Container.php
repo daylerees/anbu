@@ -67,7 +67,12 @@ class Container extends Module
         $this->badge = count($this->data['bindings']);
     }
 
-
+    /**
+     * Build an array of bindings for the view.
+     *
+     * @param  array  $bindings
+     * @return array
+     */
     protected function buildBindingsArray(array $bindings)
     {
         // Bindings array buffer.
