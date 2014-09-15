@@ -204,13 +204,19 @@ class Profiler
         $type = $response->headers->get('Content-Type');
 
         // Check for JSON in the header.
-        if (strstr($type, 'text/html') && $this->display) {
+        if (strstr($type, 'text/html') && $this->display && !$response->isRedirection()) {
 
             // Get the view component.
             $view = $this->app->make('view');
 
+            // Get the response content.
+            $content = $response->getContent();
+
             // Append button to response.
-            echo $view->make('anbu::button', compact('storage'));
+            $content .= $view->make('anbu::button', compact('storage'));
+
+            // Replace the old content.
+            $response->setContent($content);
         }
     }
 
