@@ -4,13 +4,15 @@
     <thead>
         <tr>
             <th>Query</th>
+            <th>Arguments</th>
             <th>Execution Time</th>
         </tr>
     </thead>
     <tbody>
         @foreach($queries as $query)
         <tr>
-            <td class="code">{{ $query[0] }} | {{ json_encode($query[1]) }}</td>
+            <td class="code">{{ $query[0] }}</td>
+            <td class="code" style="word-break: break-all;">{{ json_encode($query[1]) }}</td>
             <td>{{ number_format($query[2], 5) }}ms</td>
         </tr>
         @endforeach
