@@ -10,8 +10,8 @@
     <tbody>
         @foreach($logs as $log)
         <tr>
-            <td class="log-col-0"><span class="log-tag log-tag-{{ strtolower($log[0]) }}">{{ strtoupper($log[0]) }}</span></td>
-            <td>{{ $log[1] }}</td>
+            <td class="log-col-0"><span class="log-tag log-tag-{{ strtolower($log['type']) }}">{{ strtoupper($log['type']) }}</span></td>
+            <td>{{ $log['message'] }}</td>
         </tr>
         @endforeach
     </tbody>
