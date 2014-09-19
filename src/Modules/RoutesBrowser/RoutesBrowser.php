@@ -57,9 +57,10 @@ class RoutesBrowser extends Module
 
             // Add a new route to the data array.
             $this->data['routes'][] = [
-                $route->getMethods(),                               // HTTP Verb
-                $this->highlightParams($route->getPath()),          // URI
-                $route->getActionName()                             // Action
+                'methods' => $route->getMethods(),
+                'name'    => $route->getName(),
+                'path'    => $this->highlightParams($route->getPath()),
+                'action'  => $route->getActionName(),
             ];
         }
 
@@ -68,9 +69,10 @@ class RoutesBrowser extends Module
 
         // Set the current route information.
         $this->data['current'] = [
-            $request->method(),                               // HTTP Verb
-            $this->highlightParams($current->getPath()),      // URI
-            $current->getActionName()                         // Action
+            'methods' => [$request->method()],
+            'name'    => $current->getName(),
+            'path'    => $this->highlightParams($current->getPath()),
+            'action'  => $current->getActionName(),
         ];
 
         // Set badge to number of registered routes.

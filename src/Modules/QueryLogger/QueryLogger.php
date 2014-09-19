@@ -92,16 +92,15 @@ class QueryLogger extends Module
      *
      * @return void
      */
-    public function queryEventFired()
+    public function queryEventFired($query, $bindings, $time, $name)
     {
-        // Get the arguments.
-        $args = func_get_args();
-
-        // Highlight SQL terms.
-        $args[0] = $this->highlightQuery($args[0]);
-
         // Add the query to the buffer.
-        $this->data['queries'][] = $args;
+        $this->data['queries'][] = [
+            'query'    => $this->highlightQuery($query),
+            'bindings' => $bindings,
+            'time'     => $time,
+            'name'     => $name, // Connection name
+        ];
     }
 
     /**
