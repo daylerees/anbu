@@ -92,10 +92,10 @@ class Container extends Module
 
                 // Create a new row.
                 $rows[] = [
-                    $identifier,
-                    $this->getServiceDescription($service),
-                    $resolved,
-                    $this->calculateServiceResolutionTime($identifier)
+                    'id'          => $identifier,
+                    'description' => $this->getServiceDescription($service),
+                    'resolved'    => $resolved,
+                    'time'        => $this->calculateServiceResolutionTime($identifier)
                 ];
             }
             catch (Exception $exception) {

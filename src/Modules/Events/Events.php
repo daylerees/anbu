@@ -63,8 +63,8 @@ class Events extends Module
 
         // Add the event to the data array.
         $this->data['events'][] = [
-            $event->firing(),
-            microtime(true) - LARAVEL_START
+            'name' => $event->firing(),
+            'time' => microtime(true) - LARAVEL_START
         ];
     }
 

@@ -56,10 +56,13 @@ class Logger extends Module
      *
      * @return void
      */
-    public function logEventFired()
+    public function logEventFired($type, $message)
     {
-        // Add log to buffer.
-        $this->data['logs'][] = func_get_args();
+        // Add log to buffer
+        $this->data['logs'][] = [
+            'type'    => $type,
+            'message' => $message,
+        ];
     }
 
     /**

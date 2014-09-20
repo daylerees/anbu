@@ -10,8 +10,8 @@
     <tbody>
         @foreach($events as $event)
         <tr>
-            <td class="code">{{ $event[0] }}</td>
-            <td>{{ number_format($event[1], 3) }}ms</td>
+            <td class="code">{{ $event['name'] }}</td>
+            <td>{{ number_format($event['time'], 3) }}ms</td>
         </tr>
         @endforeach
     </tbody>

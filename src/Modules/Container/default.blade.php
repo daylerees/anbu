@@ -12,10 +12,10 @@
     <tbody>
         @foreach($bindings as $binding)
         <tr>
-            <td class="code">{{ $binding[0] }}</td>
-            <td class="code">{{ $binding[1] }}</td>
-            <td class="{{ $binding[2] ? 'green' : 'red' }}">{{ $binding[2] ? 'true' : 'false' }}</td>
-            <td>{{ $binding[3] }}ms</td>
+            <td class="code">{{ $binding['id'] }}</td>
+            <td class="code">{{ $binding['description'] }}</td>
+            <td class="{{ $binding['resolved'] ? 'green' : 'red' }}">{{ $binding['resolved'] ? 'true' : 'false' }}</td>
+            <td>{{ $binding['time'] }}ms</td>
         </tr>
         @endforeach
     </tbody>
