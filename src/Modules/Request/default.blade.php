@@ -78,7 +78,7 @@
         @foreach($server as $key => $value)
         <tr>
             <td>{{ $key }}</td>
-            <td class="code">{{ str_limit(print_r($value)) }}</td>
+            <td class="code">{{ str_limit(print_r($value, true)) }}</td>
         </tr>
         @endforeach
     </tbody>
