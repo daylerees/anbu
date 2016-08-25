@@ -167,17 +167,6 @@ class Profiler
         $this->modules[$module->getSlug()] = $module;
     }
 
-    /*
-     * Register event listeners for the profiler.
-     *
-     * @return void
-     */
-    public function registerListeners()
-    {
-        // Bind the after event.
-        $this->app->after([$this, 'executeAfterHook']);
-    }
-
     /**
      * Execute hooks after the frameworks request cycle.
      *

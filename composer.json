@@ -1,6 +1,6 @@
 {
     "name": "daylerees/anbu",
-    "description": "The Anbu profiler for Laravel 4.",
+    "description": "The Anbu profiler for Laravel 5.",
     "keywords": ["laravel", "anbu", "profiler", "debug"],
     "license": "MIT",
     "authors": [

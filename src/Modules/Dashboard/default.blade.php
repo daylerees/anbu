@@ -6,7 +6,7 @@
     <div class="widget">
         <span class="widget-badge"><span class="widget-badge-count">{{ $widget->badge }}</span></span>
         <h1>{{ $widget->name }}</h1>
-        {{ $widget->view }}
+        {!! $widget->view !!}
     </div>
     @endforeach
 @else
