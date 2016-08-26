@@ -33,19 +33,11 @@ class AnbuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
-    }
+        $response = $next($request);
 
-    /**
-     * Handle request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Http\Response $response
-     * @return void
-     */
-    public function terminate($request, $response)
-    {
         $this->profiler->executeAfterHook($request, $response);
+
+        return $response;
     }
 
 }
