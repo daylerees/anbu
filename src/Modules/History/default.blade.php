@@ -16,8 +16,8 @@
         </tr>
     </thead>
     <tbody>
-        <?php $start = ($history->getCurrentPage() - 1) * $history->getPerPage(); ?>
-        @foreach(array_slice($history->getItems(), $start, $history->getPerPage()) as $storage)
+        <?php $start = ($history->currentPage() - 1) * $history->perPage(); ?>
+        @foreach(array_slice($history->all(), $start, $history->perPage()) as $storage)
         <tr>
             <?php $storage = $storage->toArray(); ?>
             <?php $date = new Carbon\Carbon($storage['created_at']); ?>
@@ -29,7 +29,7 @@
 
     </tbody>
 </table>
-{{ $history->links() }}
+{!! $history->render() !!}
 <br /> <br />
 @else
 <div class="empty">No previous requests are present.</div>

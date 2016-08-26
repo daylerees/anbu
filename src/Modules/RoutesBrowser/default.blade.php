@@ -11,14 +11,14 @@
     <tbody>
         <tr>
             <td><span class="method-tag method-tag-{{ strtolower($current['methods'][0]) }}">{{ $current['methods'][0] }}</span></td>
-            <td class="code">{{ $current['path'] }}</td>
+            <td class="code">{!! $current['path'] !!}</td>
             <td class="code">{{ $current['name'] }}</td>
             <td class="code">{{ $current['action'] }}</td>
         </tr>
     </tbody>
 </table>
 
-<h1>Routing Table</h1>
+<h1>Routing Table ({{ count($routes) }})</h1>
 @if (isset($routes) && count($routes))
 <table class="anbu-table">
     <thead>
@@ -37,7 +37,7 @@
             <span class="method-tag method-tag-{{ strtolower($method) }}">{{ $method }}</span>
             @endforeach
             </td>
-            <td class="code">{{ $route['path'] }}</td>
+            <td class="code">{!! $route['path'] !!}</td>
             <td class="code">{{ $route['name'] }}</td>
             <td class="code">{{ $route['action'] }}</td>
         </tr>
