@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ $current->getName() }} | Anbu</title>
-    <link rel="stylesheet" href="{{ url('packages/daylerees/anbu/default.css') }}" />
+    <link rel="stylesheet" href="{!! url('packages/daylerees/anbu/default.css') !!}" />
 </head>
 <body>
     <header>
-        <img src="{{ url('packages/daylerees/anbu/img/profiler_logo.png') }}" alt="Laravel" class="logo">
+        <img src="{!! url('packages/daylerees/anbu/img/profiler_logo.png') !!}" alt="Laravel" class="logo">
         <?php $date = new Carbon\Carbon($storage->created_at); ?>
         <span class="request"><span class="request-time"><span class="uri">{{ $uri }}</span> - {{ $date->format('d/m/y H:i:s') }} - <span class="duration">{{ number_format($storage->time, 3) }}ms</span></span><a href="{{ url('/anbu') }}" class="request-reset" title="Back to latest."><i class="fa fa-reply"></i></a></span>
         <span class="version">Laravel {{ $version }}</span>
@@ -38,7 +38,7 @@
     </nav>
     <div class="container">
         <div class="content">
-            {{ $child }}
+            {!! $child !!}
         </div>
     </div>
 </body>

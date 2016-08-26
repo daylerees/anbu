@@ -1,4 +1,4 @@
-<h1>Queries</h1>
+<h1>Queries ({{ count($queries) }})</h1>
 @if (isset($queries) && count($queries))
 <table class="anbu-table">
     <thead>
@@ -11,7 +11,7 @@
     <tbody>
         @foreach($queries as $query)
         <tr>
-            <td class="code">{{ $query['query'] }}</td>
+            <td class="code">{!! $query['query'] !!}</td>
             <td class="code" style="word-break: break-all;">{{ json_encode($query['bindings']) }}</td>
             <td>{{ number_format($query['time'], 2) }}ms</td>
         </tr>

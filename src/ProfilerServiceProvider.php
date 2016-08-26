@@ -34,6 +34,10 @@ class ProfilerServiceProvider extends ServiceProvider
             return;
         }
 
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('packages/daylerees/anbu'),
+        ]);
+
         // Register clear command.
         $this->commands('Anbu\\Commands\\ClearCommand');
 
@@ -52,8 +56,8 @@ class ProfilerServiceProvider extends ServiceProvider
         // Fire module register events.
         $anbu->registerModules($this->app);
 
-        // Register event listeners.
-        $anbu->registerListeners();
+        // Register the middlewares.
+        $this->registerMiddlewares();
 
         // Bind within container.
         $this->app->instance('Anbu\\Profiler', $anbu);
@@ -85,18 +89,29 @@ class ProfilerServiceProvider extends ServiceProvider
         // Get the router.
         $route = $this->app->make('router');
 
-        // Register filters.
-        $route->filter('anbu.hide', 'Anbu\\Filters\\ProfilerFilter@hide');
-        $route->filter('anbu.disable', 'Anbu\\Filters\\ProfilerFilter@disable');
-
         // Bind profiler display route.
         $route->get(
             'anbu/{storage?}/{module?}',
             [
-                'before'    => 'anbu.disable',
+                'middleware'    => 'anbu.disable',
                 'uses'      => 'Anbu\\Controllers\\ProfilerController@index'
             ]
         );
+    }
+
+    /**
+     * Register the middlewares.
+     *
+     * @return void
+     */
+    protected function registerMiddlewares()
+    {
+        $this->app['router']->middleware('anbu.hide', 'Anbu\\Middleware\\ProfilerHideMiddleware');
+        $this->app['router']->middleware('anbu.disable', 'Anbu\\Middleware\\ProfilerDisableMiddleware');
+
+        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
+
+        $kernel->pushMiddleware('Anbu\\Middleware\\AnbuMiddleware');
     }
 
     /**

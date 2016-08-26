@@ -84,7 +84,11 @@ class QueryLogger extends Module
         $this->data['queries'] = [];
 
         // Listen for database queries.
-        $event->listen('illuminate.query', [$this, 'queryEventFired']);
+        // $this->app['db']->enableQueryLog();
+
+        $this->app['db']->listen(function($query) {
+            $this->queryEventFired($query);
+        });
     }
 
     /**
@@ -92,14 +96,15 @@ class QueryLogger extends Module
      *
      * @return void
      */
-    public function queryEventFired($query, $bindings, $time, $name)
+    public function queryEventFired($query)
     {
         // Add the query to the buffer.
         $this->data['queries'][] = [
-            'query'    => $this->highlightQuery($query),
-            'bindings' => $bindings,
-            'time'     => $time,
-            'name'     => $name, // Connection name
+            // 'query'    => $this->highlightQuery($query->sql),
+            'query'    => $query->sql,
+            'bindings' => $query->bindings,
+            'time'     => $query->time,
+            'name'     => $query->connectionName, // Connection name
         ];
     }
 

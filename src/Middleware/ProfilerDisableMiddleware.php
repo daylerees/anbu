@@ -1,10 +1,11 @@
 <?php
 
-namespace Anbu\Filters;
+namespace Anbu\Middleware;
 
+use Closure;
 use Anbu\Profiler;
 
-class ProfilerFilter
+class ProfilerDisableMiddleware
 {
     /**
      * Resolve a profiler instance.
@@ -24,22 +25,17 @@ class ProfilerFilter
     }
 
     /**
-     * Execute the filter to disable the anbu button.
+     * Handle request.
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Closure $next
+     * @return mixed
      */
-    public function hide()
-    {
-        $this->profiler->hide();
-    }
-
-    /**
-     * Execute the filter to disable anbu.
-     *
-     * @return void
-     */
-    public function disable()
+    public function handle($request, Closure $next)
     {
         $this->profiler->disable();
+
+        return $next($request);
     }
+
 }
